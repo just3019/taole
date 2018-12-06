@@ -2,6 +2,11 @@ spring:
   application:
     name: taole
   datasource:
-    url: jdbc:mysql://114.115.250.185/taole?useSSL=false
+    url: jdbc:mysql://114.115.251.174:13306/taole?useSSL=false
     username: taole
     password: Z##kUK5nFb$&c2WXn89%pLRE34MI1VYP
+
+logging.file: logs/${spring.application.name}.log
+logging:
+  level:
+    org.demon: debug
