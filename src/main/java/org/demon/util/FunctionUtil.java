@@ -38,6 +38,19 @@ public class FunctionUtil {
         }
     }
 
+    /**
+     * 当成功，执行
+     *
+     * @param flag true false
+     * @param c    需要执行的方法{@link Consumer}
+     * @param val  需要处理的值
+     */
+    public static <T> void whenTrueDo(boolean flag, Consumer<T> c, T val) {
+        if (flag) {
+            c.accept(val);
+        }
+    }
+
 
     /**
      * 通过flag判断是否执行方法，

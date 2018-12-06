@@ -6,7 +6,11 @@ spring:
     username: taole
     password: Z##kUK5nFb$&c2WXn89%pLRE34MI1VYP
 
+# 日志设置
 logging.file: logs/${spring.application.name}.log
 logging:
   level:
     org.demon: debug
+    org.demon.taole.mapper: error
+
+
