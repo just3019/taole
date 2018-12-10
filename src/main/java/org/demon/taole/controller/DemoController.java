@@ -27,8 +27,13 @@ public class DemoController {
         return demoService.get(id);
     }
 
-    @PostMapping(value = "demo")
+    @PostMapping(value = "demos")
     public Demo test_02(@RequestBody Demo demo) {
         return demoService.get(demo.getId());
+    }
+
+    @PostMapping(value = "demo")
+    public Demo save(@RequestBody Demo demo) {
+        return demoService.save(demo);
     }
 }

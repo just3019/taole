@@ -1,6 +1,5 @@
 package org.demon.taole.service;
 
-import cn.hutool.json.JSONUtil;
 import lombok.extern.apachecommons.CommonsLog;
 import org.demon.taole.mapper.DemoMapper;
 import org.demon.taole.pojo.Demo;
@@ -21,7 +20,11 @@ public class DemoService {
     private DemoMapper demoMapper;
 
     public Demo get(Long id) {
-        Demo demo = demoMapper.selectByPrimaryKey(id);
+        return demoMapper.selectByPrimaryKey(id);
+    }
+
+    public Demo save(Demo demo) {
+        demoMapper.insertSelective(demo);
         return demo;
     }
 }
