@@ -2,16 +2,14 @@ package org.demon.taole.pojo;
 
 import java.util.Date;
 
-public class Scan {
+public class ScanProductPrice {
     private Long id;
 
-    private String name;
+    private Long scanProductId;
 
     private Integer price;
 
     private Date createtime;
-
-    private String source;
 
     public Long getId() {
         return id;
@@ -21,12 +19,12 @@ public class Scan {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Long getScanProductId() {
+        return scanProductId;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setScanProductId(Long scanProductId) {
+        this.scanProductId = scanProductId;
     }
 
     public Integer getPrice() {
@@ -43,13 +41,5 @@ public class Scan {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source == null ? null : source.trim();
     }
 }

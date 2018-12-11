@@ -1,12 +1,18 @@
 package org.demon.taole.service.jd;
 
+import cn.hutool.core.text.StrFormatter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.extern.apachecommons.CommonsLog;
+import org.demon.util.FunctionUtil;
+import org.demon.util.JSONUtil;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * desc:
@@ -17,25 +23,152 @@ import java.net.http.HttpResponse;
 @CommonsLog
 public class JdQueryListTask implements Runnable {
 
-    private String queryString;
+    //    private String
+
 
     public JdQueryListTask(String queryString) {
-        this.queryString = queryString;
     }
 
     @Override
     public void run() {
-        HttpClient client = HttpClient.newBuilder().build();
-        HttpRequest request = HttpRequest
-                .newBuilder(URI.create("https://api.m.jd.com/client.action"))
-                .POST(HttpRequest.BodyPublishers.ofString(queryString)).build();
-        try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            if (log.isDebugEnabled()) {
-                log.debug(response.body());
-            }
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+        Body body = new Body();
+        body.setKeyword("iphone xs max");
+        Price price = new Price("6000", "10000");
+        body.setPrice(price);
+        JdSearch jdSearch = new JdSearch();
+        jdSearch.setBody(JSONUtil.obj2Json(body));
+        String params = jdSearch.toParams();
+        System.out.println(params);
+        HttpClient.newBuilder().build().sendAsync(
+                HttpRequest.newBuilder().uri(URI.create("https://api.m.jd.com/client.action?functionId=search"))
+                        .header("content-type", "application/x-www-form-urlencoded")
+                        .POST(HttpRequest.BodyPublishers.ofString(params)).build(),
+                HttpResponse.BodyHandlers.ofString()
+        ).whenComplete((resp, e) -> {
+            FunctionUtil.whenTrueDo(Objects::nonNull, Throwable::printStackTrace, e);
+            log.info("statusCode:" + resp.statusCode());
+            log.info("version:" + resp.version());
+            log.info("body:" + resp.body());
+            Result result = JSONUtil.json2Obj(resp.body(), Result.class);
+            assert result != null;
+            log.info(JSONUtil.obj2Json(result.wareInfo));
+            result.wareInfo.forEach(a -> log.info(JSONUtil.obj2Json(a)));
+        }).join();
+    }
+
+
+    @Data
+    private class Result {
+        private List<WareInfo> wareInfo;
+
+    }
+
+
+    @Data
+    private class WareInfo {
+        //        private String spuId;
+        //        private String cid1;
+        //        private String cid2;
+        //        private String catid;
+        private String wareId;
+        private String wname;
+        //        private String imageurl;
+        private String jdPrice;
+        //        private List<String> promotionFlag;
+        private long totalCount;
+        //        private String fuzzyTotalCount;
+        //        private boolean recentYear;
+        //        private String reviews;
+        //        private String venderId;
+        //        private String venderType;
+        //        private String shopId;
+        //        private boolean eBookFlag;
+        //        private boolean international;
+        //        private boolean eche;
+        //        private boolean needShield;
+        //        private boolean needShieldCartAndFollow;
+        //        private List<String> promotionType;
+        //        private String showlog;
+        //        private String flags;
+        //        private boolean groupBuyFlag;
+        //        private List<String> customAttrList;
+        //        private String author;
+        //        private boolean flashBuy;
+        //        private String promotionIconUrl;
+        //        private String longImgUrl;
+        //        private boolean preSale;
+        //        private boolean purchasing;
+        private String couponTag;
+        //        private boolean exposeSkus;
+        //        private int colorCount;
+        //        private boolean newSeasonClothes;
+        //        private boolean localStore;
+        //        private String installment;
+        //        private String priceType;
+        //        private String videoIconUrl;
+        //        private boolean secKill;
+        //        private boolean loc;
+        //        private boolean self;
+    }
+
+
+    @Data
+    public class Body {
+        private String isCorrect = "1";
+        private String showStoreTab = "1";
+        private String orignalSelect = "1";
+        private String insertedCount = "0";
+        private String keyword = "iphone";
+        private String localNum = "1";
+        private String pagesize = "10";
+        private String orignalSearch = "1";
+        private String stock = "1";
+        private String articleEssay = "1";
+        private String oneBoxMod = "1";
+        //        private String latitude = String.valueOf(RandomUtil.randomDouble(18.229351, 53.383328));
+        private String latitude = "30.294473";
+        private String newMiddleTag = "1";
+        private String deviceidTail = "85";
+        private String addrFilter = "1";
+        private String jshop = "1";
+        private String insertArticle = "1";
+        //        private String longitude = String.valueOf(RandomUtil.randomDouble(74.003906, 134.033203));
+        private String longitude = "120.118850";
+        private String lastkey = "纸巾";
+        private String newVersion = "3";
+        private String pageEntrance = "1";
+        private String page = "1";
+        private String insertScene = "1";
+        private String showShopTab = "yes";
+        private String sort = "3";//3:排序价格升序
+        private Price price;
+
+        public String toJson() {
+            return JSONUtil.obj2Json(this);
+        }
+    }
+
+    @Data
+    @AllArgsConstructor
+    private class Price {
+        private String min;
+        private String max;
+
+    }
+
+    @Data
+    public class JdSearch {
+        public String body;
+        public String client = "apple";
+        public String clientVersion = "7.2.6";
+        public String openudid = "f9548741c2c64dc34cecf450543d893a3a8cd415";
+        public String sign = "8f97e3e1897c147366165d58adfa5af0";
+        public String st = "1544085662649";
+        public String sv = "121";
+
+        String toParams() {
+            return StrFormatter.format("body={}&client={}&clientVersion={}&openudid={}&sign={}&st={}&sv={}", body,
+                    client, clientVersion, openudid, sign, st, sv);
         }
 
     }
