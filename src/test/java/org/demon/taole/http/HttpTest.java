@@ -9,7 +9,6 @@ import org.demon.taole.pojo.Demo;
 import org.demon.util.FunctionUtil;
 import org.demon.util.JSONUtil;
 import org.junit.Test;
-import org.mockito.internal.util.StringUtil;
 
 import java.net.URI;
 import java.net.http.HttpClient;
