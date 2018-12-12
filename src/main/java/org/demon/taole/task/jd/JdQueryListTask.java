@@ -1,11 +1,15 @@
-package org.demon.taole.service.jd;
+package org.demon.taole.task.jd;
 
 import cn.hutool.core.text.StrFormatter;
+import cn.hutool.core.util.NumberUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.apachecommons.CommonsLog;
+import org.demon.taole.pojo.ScanProduct;
+import org.demon.taole.service.ScanProductService;
 import org.demon.util.FunctionUtil;
 import org.demon.util.JSONUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -23,11 +27,13 @@ import java.util.Objects;
 @CommonsLog
 public class JdQueryListTask implements Runnable {
 
-    //    private String
+    private ScanProductService scanProductService;
 
-
-    public JdQueryListTask(String queryString) {
+    @Autowired
+    public JdQueryListTask(ScanProductService scanProductService) {
+        this.scanProductService = scanProductService;
     }
+
 
     @Override
     public void run() {
@@ -46,14 +52,20 @@ public class JdQueryListTask implements Runnable {
                 HttpResponse.BodyHandlers.ofString()
         ).whenComplete((resp, e) -> {
             FunctionUtil.whenTrueDo(Objects::nonNull, Throwable::printStackTrace, e);
-            log.info("statusCode:" + resp.statusCode());
-            log.info("version:" + resp.version());
             log.info("body:" + resp.body());
             Result result = JSONUtil.json2Obj(resp.body(), Result.class);
             assert result != null;
-            log.info(JSONUtil.obj2Json(result.wareInfo));
-            result.wareInfo.forEach(a -> log.info(JSONUtil.obj2Json(a)));
+            result.wareInfo.forEach(a -> scanProductService.save(convert(a)));
         }).join();
+    }
+
+    private ScanProduct convert(WareInfo a) {
+        ScanProduct scanProduct = new ScanProduct();
+        scanProduct.setName(a.wname);
+        scanProduct.setProductId(a.wareId);
+        scanProduct.setSource("0");
+        scanProduct.setPrice(NumberUtil.parseInt(a.jdPrice));
+        return scanProduct;
     }
 
 
@@ -116,36 +128,30 @@ public class JdQueryListTask implements Runnable {
     public class Body {
         private String isCorrect = "1";
         private String showStoreTab = "1";
-        private String orignalSelect = "1";
+        private String orignalSelect = "0";
         private String insertedCount = "0";
         private String keyword = "iphone";
-        private String localNum = "1";
         private String pagesize = "10";
-        private String orignalSearch = "1";
+        private String sort = "3";//3:排序价格升序
+        private String orignalSearch = "0";
         private String stock = "1";
-        private String articleEssay = "1";
-        private String oneBoxMod = "1";
-        //        private String latitude = String.valueOf(RandomUtil.randomDouble(18.229351, 53.383328));
-        private String latitude = "30.294473";
         private String newMiddleTag = "1";
+        private String articleEssay = "1";
+        private String latitude = "30.294477";
+        private String oneBoxMod = "1";
         private String deviceidTail = "85";
-        private String addrFilter = "1";
         private String jshop = "1";
+        private String addrFilter = "1";
         private String insertArticle = "1";
-        //        private String longitude = String.valueOf(RandomUtil.randomDouble(74.003906, 134.033203));
-        private String longitude = "120.118850";
-        private String lastkey = "纸巾";
+        private String longitude = "120.118829";
         private String newVersion = "3";
+        private String lastkey = "纸巾";
         private String pageEntrance = "1";
         private String page = "1";
+        private Price price;
         private String insertScene = "1";
         private String showShopTab = "yes";
-        private String sort = "3";//3:排序价格升序
-        private Price price;
 
-        public String toJson() {
-            return JSONUtil.obj2Json(this);
-        }
     }
 
     @Data
@@ -158,13 +164,17 @@ public class JdQueryListTask implements Runnable {
 
     @Data
     public class JdSearch {
-        public String body;
-        public String client = "apple";
-        public String clientVersion = "7.2.6";
-        public String openudid = "f9548741c2c64dc34cecf450543d893a3a8cd415";
-        public String sign = "8f97e3e1897c147366165d58adfa5af0";
-        public String st = "1544085662649";
-        public String sv = "121";
+        private String adid = "8D49B19A-F460-4302-9902-5374CBB0AE45";
+        private String area = "15_1213_3411_52667";
+        private String body;
+        private String build = "164842";
+        private String client = "apple";
+        private String clientVersion = "7.2.6";
+        private String openudid = "f9548741c2c64dc34cecf450543d893a3a8cd415";
+        private String sign = "672d8f060f2a3b737123fb2f6fa2d3f6";
+        private String st = "1544521883962";
+        private String sv = "122";
+        private String uuid = "coW0lj7vbXVin6h7ON+tMNFQqYBqMahr";
 
         String toParams() {
             return StrFormatter.format("body={}&client={}&clientVersion={}&openudid={}&sign={}&st={}&sv={}", body,

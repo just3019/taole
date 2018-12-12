@@ -1,10 +1,13 @@
 package org.demon.taole.mapper;
 
-import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.demon.taole.pojo.ScanProduct;
 import org.demon.taole.pojo.ScanProductExample;
 
+import java.util.List;
+
+@Mapper
 public interface ScanProductMapper {
     long countByExample(ScanProductExample example);
 
