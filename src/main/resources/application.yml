@@ -5,6 +5,11 @@ spring:
     url: jdbc:mysql://114.115.251.174:13306/taole?useSSL=false
     username: taole
     password: Z##kUK5nFb$&c2WXn89%pLRE34MI1VYP
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: never
+
 
 # 日志设置
 logging.file: logs/${spring.application.name}.log
