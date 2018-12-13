@@ -45,7 +45,7 @@ class WebDriverPool {
     private WebDriver mDriver = null;
     private boolean mAutoQuitDriver = true;
 
-    private static final String DEFAULT_CONFIG_FILE = "/Users/demon/idea/taole/src/main/resources/config.ini";
+    private static final String DEFAULT_CONFIG_FILE = "/Users/demon/IdeaProjects/taole/src/main/resources/config.ini";
     private static final String DRIVER_FIREFOX = "firefox";
     private static final String DRIVER_CHROME = "chrome";
     private static final String DRIVER_PHANTOMJS = "phantomjs";
