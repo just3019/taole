@@ -48,6 +48,7 @@ class WebDriverPool {
     private static final String DRIVER_FIREFOX = "firefox";
     private static final String DRIVER_CHROME = "chrome";
     private static final String DRIVER_PHANTOMJS = "phantomjs";
+    private static final String PHANTOMJS_DRIVER_PATH = "/usr/local/phantomjs/bin/phantomjs";
 
     protected static Properties sConfig;
     protected static DesiredCapabilities sCaps;
@@ -79,16 +80,7 @@ class WebDriverPool {
         // Fetch PhantomJS-specific configuration parameters
         if (driver.equals(DRIVER_PHANTOMJS)) {
             // "phantomjs_exec_path"
-            if (sConfig.getProperty("phantomjs_exec_path") != null) {
-                sCaps.setCapability(
-                        PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,
-                        sConfig.getProperty("phantomjs_exec_path"));
-            } else {
-                throw new IOException(
-                        String.format(
-                                "Property '%s' not set!",
-                                PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY));
-            }
+            sCaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, PHANTOMJS_DRIVER_PATH);
             // "phantomjs_driver_path"
             if (sConfig.getProperty("phantomjs_driver_path") != null) {
                 System.out.println("Test will use an external GhostDriver");
