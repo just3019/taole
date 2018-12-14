@@ -1,6 +1,7 @@
 package org.demon.taole.service.suning;
 
 import cn.hutool.core.util.NumberUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.apachecommons.CommonsLog;
 import org.demon.taole.pojo.ScanProduct;
 import org.demon.taole.pojo.SuningTask;
@@ -47,6 +48,7 @@ public class SuningPageProcesser implements PageProcessor {
         scanProduct.setProductId(suningTask.getProductId());
         scanProduct.setSource("1");
         if (scanProduct.getPrice() == 0) {
+            log.info(StrUtil.format("\n{}\n{}", name, price));
             return;
         }
         scanProductService.save(scanProduct);
