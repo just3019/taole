@@ -39,19 +39,23 @@ public class SuningPageProcesser implements PageProcessor {
 
     @Override
     public void process(Page page) {
-        Html html = page.getHtml();
-        String name = html.xpath("//*[@id=\"itemDisplayName\"]/text()").toString();
-        String price = page.getHtml().xpath(suningTask.getXpathPrice()).toString();
-        ScanProduct scanProduct = new ScanProduct();
-        scanProduct.setPrice(NumberUtil.parseInt(price));
-        scanProduct.setName(name);
-        scanProduct.setProductId(suningTask.getProductId());
-        scanProduct.setSource("1");
-        if (scanProduct.getPrice() == 0 || scanProduct.getPrice() == null) {
-            log.info(StrUtil.format("\n{}\n{}", name, price));
-            return;
+        try {
+            Html html = page.getHtml();
+            String name = html.xpath("//*[@id=\"itemDisplayName\"]/text()").toString();
+            String price = page.getHtml().xpath(suningTask.getXpathPrice()).toString();
+            ScanProduct scanProduct = new ScanProduct();
+            scanProduct.setPrice(NumberUtil.parseInt(price));
+            scanProduct.setName(name);
+            scanProduct.setProductId(suningTask.getProductId());
+            scanProduct.setSource("1");
+            if (scanProduct.getPrice() == 0 || scanProduct.getPrice() == null) {
+                log.info(StrUtil.format("\n{}\n{}", name, price));
+                return;
+            }
+            scanProductService.save(scanProduct);
+        } catch (Exception e) {
+            log.error(e);
         }
-        scanProductService.save(scanProduct);
     }
 
     @Override
