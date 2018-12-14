@@ -20,7 +20,7 @@ public class JdTask {
     @Autowired
     private ScanProductService scanProductService;
 
-    @Scheduled(cron = "0/30 * * * * ?")
+//    @Scheduled(cron = "0/30 * * * * ?")
     public void jdQueryListTask() {
         ExecutorPool.getInstance().execute(() -> new JdQueryListTask(scanProductService).run());
     }

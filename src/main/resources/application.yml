@@ -15,7 +15,7 @@ spring:
 logging.file: logs/${spring.application.name}.log
 logging:
   level:
-    org.demon: debug
+    org.demon: info
     org.demon.taole.mapper: error
 
 

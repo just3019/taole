@@ -1,5 +1,6 @@
 package org.demon.taole.task.jd;
 
+import lombok.extern.apachecommons.CommonsLog;
 import org.demon.pool.ExecutorPool;
 import org.demon.pool.SeleniumDownloader;
 import org.demon.taole.mapper.SuningTaskMapper;
@@ -21,6 +22,7 @@ import java.util.Optional;
  * @date 2018-12-14 11:09
  */
 @Component
+@CommonsLog
 public class SuningTask {
 
     @Autowired
@@ -28,7 +30,7 @@ public class SuningTask {
     @Autowired
     private ScanProductService scanProductService;
 
-    @Scheduled(cron = "0/30 * * * * ?")
+    @Scheduled(cron = "0/10 * * * * ?")
     public void snUrlTask() {
         SuningTaskExample example = new SuningTaskExample();
         example.createCriteria().andStatusEqualTo("1");

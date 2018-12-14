@@ -1,9 +1,11 @@
 package org.demon.taole.service.suning;
 
 import cn.hutool.core.util.NumberUtil;
+import lombok.extern.apachecommons.CommonsLog;
 import org.demon.taole.pojo.ScanProduct;
 import org.demon.taole.pojo.SuningTask;
 import org.demon.taole.service.ScanProductService;
+import org.demon.util.JSONUtil;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -17,6 +19,7 @@ import us.codecraft.webmagic.selector.Html;
  * @date 2018-12-14 10:50
  */
 @Component
+@CommonsLog
 public class SuningPageProcesser implements PageProcessor {
 
     private Site site;

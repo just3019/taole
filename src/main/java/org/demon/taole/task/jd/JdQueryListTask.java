@@ -52,7 +52,7 @@ public class JdQueryListTask implements Runnable {
                 HttpResponse.BodyHandlers.ofString()
         ).whenComplete((resp, e) -> {
             FunctionUtil.whenTrueDo(Objects::nonNull, Throwable::printStackTrace, e);
-            log.info("body:" + resp.body());
+            //            log.info("body:" + resp.body());
             Result result = JSONUtil.json2Obj(resp.body(), Result.class);
             assert result != null;
             result.wareInfo.forEach(a -> scanProductService.save(convert(a)));
