@@ -463,6 +463,76 @@ public class SuningTaskExample {
             addCriterion("remark not between", value1, value2, "remark");
             return (Criteria) this;
         }
+
+        public Criteria andXpathPriceIsNull() {
+            addCriterion("xpath_price is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andXpathPriceIsNotNull() {
+            addCriterion("xpath_price is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andXpathPriceEqualTo(String value) {
+            addCriterion("xpath_price =", value, "xpathPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andXpathPriceNotEqualTo(String value) {
+            addCriterion("xpath_price <>", value, "xpathPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andXpathPriceGreaterThan(String value) {
+            addCriterion("xpath_price >", value, "xpathPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andXpathPriceGreaterThanOrEqualTo(String value) {
+            addCriterion("xpath_price >=", value, "xpathPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andXpathPriceLessThan(String value) {
+            addCriterion("xpath_price <", value, "xpathPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andXpathPriceLessThanOrEqualTo(String value) {
+            addCriterion("xpath_price <=", value, "xpathPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andXpathPriceLike(String value) {
+            addCriterion("xpath_price like", value, "xpathPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andXpathPriceNotLike(String value) {
+            addCriterion("xpath_price not like", value, "xpathPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andXpathPriceIn(List<String> values) {
+            addCriterion("xpath_price in", values, "xpathPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andXpathPriceNotIn(List<String> values) {
+            addCriterion("xpath_price not in", values, "xpathPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andXpathPriceBetween(String value1, String value2) {
+            addCriterion("xpath_price between", value1, value2, "xpathPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andXpathPriceNotBetween(String value1, String value2) {
+            addCriterion("xpath_price not between", value1, value2, "xpathPrice");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

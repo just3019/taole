@@ -11,6 +11,8 @@ public class SuningTask {
 
     private String remark;
 
+    private String xpathPrice;
+
     public Integer getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class SuningTask {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getXpathPrice() {
+        return xpathPrice;
+    }
+
+    public void setXpathPrice(String xpathPrice) {
+        this.xpathPrice = xpathPrice == null ? null : xpathPrice.trim();
     }
 }

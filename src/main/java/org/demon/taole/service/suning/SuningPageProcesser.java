@@ -2,6 +2,7 @@ package org.demon.taole.service.suning;
 
 import cn.hutool.core.util.NumberUtil;
 import org.demon.taole.pojo.ScanProduct;
+import org.demon.taole.pojo.SuningTask;
 import org.demon.taole.service.ScanProductService;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
@@ -20,17 +21,16 @@ public class SuningPageProcesser implements PageProcessor {
 
     private Site site;
 
-    private String productId;
+    private SuningTask suningTask;
 
     private ScanProductService scanProductService;
 
-    public SuningPageProcesser(String productId, ScanProductService scanProductService) {
-        this.productId = productId;
+    public SuningPageProcesser(SuningTask suningTask, ScanProductService scanProductService) {
+        this.suningTask = suningTask;
         this.scanProductService = scanProductService;
     }
 
     public SuningPageProcesser() {
-
     }
 
 
@@ -38,11 +38,11 @@ public class SuningPageProcesser implements PageProcessor {
     public void process(Page page) {
         Html html = page.getHtml();
         String name = html.xpath("//*[@id=\"itemDisplayName\"]/text()").toString();
-        String price = page.getHtml().xpath("//*[@id=\"mainPrice\"]/dl[1]/dd/span[1]/text()").toString();
+        String price = page.getHtml().xpath(suningTask.getXpathPrice()).toString();
         ScanProduct scanProduct = new ScanProduct();
         scanProduct.setPrice(NumberUtil.parseInt(price));
         scanProduct.setName(name);
-        scanProduct.setProductId(productId);
+        scanProduct.setProductId(suningTask.getProductId());
         scanProduct.setSource("1");
         scanProductService.save(scanProduct);
     }

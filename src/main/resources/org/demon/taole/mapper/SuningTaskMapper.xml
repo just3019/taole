@@ -7,6 +7,7 @@
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="xpath_price" jdbcType="VARCHAR" property="xpathPrice" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, product_id, url, status, remark
+    id, product_id, url, status, remark, xpath_price
   </sql>
   <select id="selectByExample" parameterType="org.demon.taole.pojo.SuningTaskExample" resultMap="BaseResultMap">
     select
@@ -110,9 +111,9 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.demon.taole.pojo.SuningTask" useGeneratedKeys="true">
     insert into suning_task (product_id, url, status, 
-      remark)
+      remark, xpath_price)
     values (#{productId,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR})
+      #{remark,jdbcType=VARCHAR}, #{xpathPrice,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.demon.taole.pojo.SuningTask" useGeneratedKeys="true">
     insert into suning_task
@@ -129,6 +130,9 @@
       <if test="remark != null">
         remark,
       </if>
+      <if test="xpathPrice != null">
+        xpath_price,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="productId != null">
@@ -142,6 +146,9 @@
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="xpathPrice != null">
+        #{xpathPrice,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -169,6 +176,9 @@
       <if test="record.remark != null">
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.xpathPrice != null">
+        xpath_price = #{record.xpathPrice,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -180,7 +190,8 @@
       product_id = #{record.productId,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=VARCHAR},
-      remark = #{record.remark,jdbcType=VARCHAR}
+      remark = #{record.remark,jdbcType=VARCHAR},
+      xpath_price = #{record.xpathPrice,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -200,6 +211,9 @@
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="xpathPrice != null">
+        xpath_price = #{xpathPrice,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -208,7 +222,8 @@
     set product_id = #{productId,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
+      remark = #{remark,jdbcType=VARCHAR},
+      xpath_price = #{xpathPrice,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
