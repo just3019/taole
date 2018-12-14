@@ -1,6 +1,6 @@
 package org.demon.pool;
 
-import org.apache.log4j.Logger;
+import lombok.extern.apachecommons.CommonsLog;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
@@ -25,11 +25,11 @@ import java.util.Map;
  * Date: 13-7-26 <br>
  * Time: 下午1:37 <br>
  */
+@CommonsLog
 public class SeleniumDownloader implements Downloader, Closeable {
 
     private static final String DRIVER_PHANTOMJS = "phantomjs";
     private volatile WebDriverPool webDriverPool;
-    private Logger logger = Logger.getLogger(getClass());
     private int sleepTime = 0;
     private int poolSize = 1;
 
@@ -71,10 +71,10 @@ public class SeleniumDownloader implements Downloader, Closeable {
         try {
             webDriver = webDriverPool.get();
         } catch (InterruptedException e) {
-            logger.warn("interrupted", e);
+            log.warn("interrupted", e);
             return null;
         }
-        logger.info("downloading page " + request.getUrl());
+        log.info("downloading page " + request.getUrl());
         webDriver.get(request.getUrl());
         try {
             Thread.sleep(sleepTime);

@@ -1,6 +1,6 @@
 package org.demon.pool;
 
-import org.apache.log4j.Logger;
+import lombok.extern.apachecommons.CommonsLog;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -26,8 +26,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  *         Date: 13-7-26 <br>
  *         Time: 下午1:41 <br>
  */
+@CommonsLog
 class WebDriverPool {
-    private Logger logger = Logger.getLogger(getClass());
 
     private final static int DEFAULT_CAPACITY = 5;
 
@@ -44,8 +44,8 @@ class WebDriverPool {
      */
     private WebDriver mDriver = null;
     private boolean mAutoQuitDriver = true;
-
-    private static final String DEFAULT_CONFIG_FILE = "/Users/demon/IdeaProjects/taole/src/main/resources/config.ini";
+    private static final String CONFIG_FILE = WebDriverPool.class.getResource("/") + "config.ini";
+    private static final String DEFAULT_CONFIG_FILE = CONFIG_FILE.replaceAll("file:", "");
     private static final String DRIVER_FIREFOX = "firefox";
     private static final String DRIVER_CHROME = "chrome";
     private static final String DRIVER_PHANTOMJS = "phantomjs";
@@ -228,7 +228,7 @@ class WebDriverPool {
             throw new IllegalStateException("Already closed!");
         }
         for (WebDriver webDriver : webDriverList) {
-            logger.info("Quit webDriver" + webDriver);
+            log.info("Quit webDriver" + webDriver);
             webDriver.quit();
             webDriver = null;
         }

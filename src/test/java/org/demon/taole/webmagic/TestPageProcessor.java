@@ -9,8 +9,6 @@ import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
 
-import java.sql.Struct;
-
 /**
  * desc:
  *
@@ -24,6 +22,8 @@ public class TestPageProcessor implements PageProcessor {
     private Site site;
 
     public static void main(String[] args) {
+//        System.out.println(System.getProperty("user.dir"));
+//        System.out.println(TestPageProcessor.class.getResource("/"));
 //        Spider.create(new TestPageProcessor())
 //                .addUrl("https://product.suning.com/0000000000/10606649860.html")
 //                .setDownloader(new SeleniumDownloader())
