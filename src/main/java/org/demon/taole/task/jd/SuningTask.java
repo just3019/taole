@@ -30,7 +30,7 @@ public class SuningTask {
     @Autowired
     private ScanProductService scanProductService;
 
-    @Scheduled(cron = "0/10 * * * * ?")
+    @Scheduled(cron = "0/30 * * * * ?")
     public void snUrlTask() {
         SuningTaskExample example = new SuningTaskExample();
         example.createCriteria().andStatusEqualTo("1");
