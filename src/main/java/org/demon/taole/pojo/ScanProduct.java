@@ -17,6 +17,8 @@ public class ScanProduct {
 
     private Date updatetime;
 
+    private String url;
+
     public Long getId() {
         return id;
     }
@@ -71,5 +73,13 @@ public class ScanProduct {
 
     public void setUpdatetime(Date updatetime) {
         this.updatetime = updatetime;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
     }
 }

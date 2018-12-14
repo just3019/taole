@@ -9,6 +9,13 @@ spring:
     job-store-type: jdbc
     jdbc:
       initialize-schema: never
+  mail:
+    host: smtp.aliyun.com
+    username: vampire3019@aliyun.com
+    password: SongLinhao3019!
+    sender: vampire3019@aliyun.com
+    reciever: linhao.song@welian.com
+
 
 
 # 日志设置

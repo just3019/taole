@@ -54,14 +54,14 @@
         <!--</table>-->
 
         <!--监控商品-->
-        <!--<table tableName="scan_product" domainObjectName="ScanProduct" enableUpdateByPrimaryKey="true"-->
-               <!--enableDeleteByPrimaryKey="true"-->
-               <!--enableInsert="true" enableSelectByPrimaryKey="true" selectByPrimaryKeyQueryId="true"-->
-               <!--enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"-->
-               <!--enableSelectByExample="true" selectByExampleQueryId="true">-->
-            <!--&lt;!&ndash; ibatis id 在返回值里   mybatis id 在对象中获取&ndash;&gt;-->
-            <!--<generatedKey column="id" sqlStatement="JDBC"/>-->
-        <!--</table>-->
+        <table tableName="scan_product" domainObjectName="ScanProduct" enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true"
+               enableInsert="true" enableSelectByPrimaryKey="true" selectByPrimaryKeyQueryId="true"
+               enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" selectByExampleQueryId="true">
+            <!-- ibatis id 在返回值里   mybatis id 在对象中获取-->
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
 
 
         <!--监控商品价格历史-->
@@ -75,14 +75,14 @@
         <!--</table>-->
 
 
-        <table tableName="suning_task" domainObjectName="SuningTask" enableUpdateByPrimaryKey="true"
-               enableDeleteByPrimaryKey="true"
-               enableInsert="true" enableSelectByPrimaryKey="true" selectByPrimaryKeyQueryId="true"
-               enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"
-               enableSelectByExample="true" selectByExampleQueryId="true">
-            <!-- ibatis id 在返回值里   mybatis id 在对象中获取-->
-            <generatedKey column="id" sqlStatement="JDBC"/>
-        </table>
+        <!--<table tableName="suning_task" domainObjectName="SuningTask" enableUpdateByPrimaryKey="true"-->
+               <!--enableDeleteByPrimaryKey="true"-->
+               <!--enableInsert="true" enableSelectByPrimaryKey="true" selectByPrimaryKeyQueryId="true"-->
+               <!--enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true" selectByExampleQueryId="true">-->
+            <!--&lt;!&ndash; ibatis id 在返回值里   mybatis id 在对象中获取&ndash;&gt;-->
+            <!--<generatedKey column="id" sqlStatement="JDBC"/>-->
+        <!--</table>-->
 
 
     </context>

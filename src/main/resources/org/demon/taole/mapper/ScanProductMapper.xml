@@ -9,6 +9,7 @@
     <result column="source" jdbcType="VARCHAR" property="source" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, product_id, price, source, createtime, updatetime
+    id, name, product_id, price, source, createtime, updatetime, url
   </sql>
   <select id="selectByExample" parameterType="org.demon.taole.pojo.ScanProductExample" resultMap="BaseResultMap">
     select
@@ -112,11 +113,11 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.demon.taole.pojo.ScanProduct" useGeneratedKeys="true">
     insert into scan_product (name, product_id, price, 
-      source, createtime, updatetime
-      )
+      source, createtime, updatetime, 
+      url)
     values (#{name,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, 
-      #{source,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
-      )
+      #{source,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{url,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.demon.taole.pojo.ScanProduct" useGeneratedKeys="true">
     insert into scan_product
@@ -139,6 +140,9 @@
       <if test="updatetime != null">
         updatetime,
       </if>
+      <if test="url != null">
+        url,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="name != null">
@@ -158,6 +162,9 @@
       </if>
       <if test="updatetime != null">
         #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -191,6 +198,9 @@
       <if test="record.updatetime != null">
         updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -204,7 +214,8 @@
       price = #{record.price,jdbcType=INTEGER},
       source = #{record.source,jdbcType=VARCHAR},
       createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      updatetime = #{record.updatetime,jdbcType=TIMESTAMP}
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      url = #{record.url,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -230,6 +241,9 @@
       <if test="updatetime != null">
         updatetime = #{updatetime,jdbcType=TIMESTAMP},
       </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -240,7 +254,8 @@
       price = #{price,jdbcType=INTEGER},
       source = #{source,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},
-      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      url = #{url,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

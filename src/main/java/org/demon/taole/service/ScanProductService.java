@@ -1,5 +1,6 @@
 package org.demon.taole.service;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.apachecommons.CommonsLog;
 import org.demon.exception.BusinessException;
 import org.demon.taole.mapper.ScanProductMapper;
@@ -29,6 +30,8 @@ public class ScanProductService {
     private ScanProductMapper scanProductMapper;
     @Autowired
     private ScanProductPriceService scanProductPriceService;
+    @Autowired
+    private MailService mailService;
 
 
     /**
@@ -61,6 +64,7 @@ public class ScanProductService {
         if (!scanProduct.getPrice().equals(pojo.getPrice())) {
             scanProduct.setPrice(pojo.getPrice());
             scanProductMapper.updateByExampleSelective(scanProduct, example);
+            sendMail(scanProduct);
         }
         scanProduct.setPrice(pojo.getPrice());
         scanProductPriceService.save(convert(scanProduct));
@@ -72,6 +76,12 @@ public class ScanProductService {
         price.setPrice(scanProduct.getPrice());
         price.setScanProductId(scanProduct.getId());
         return price;
+    }
+
+    private void sendMail(ScanProduct scanProduct) {
+        String subject = StrUtil.format("{}价格改变", scanProduct.getName());
+        String content = StrUtil.format("当前价格：{}\n 商品地址：{}", scanProduct.getPrice(), scanProduct.getUrl());
+        mailService.send(subject, content);
     }
 
     public ScanProduct get() {
