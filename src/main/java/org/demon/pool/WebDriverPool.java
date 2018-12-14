@@ -44,8 +44,7 @@ class WebDriverPool {
      */
     private WebDriver mDriver = null;
     private boolean mAutoQuitDriver = true;
-    private static final String CONFIG_FILE = WebDriverPool.class.getResource("/") + "config.ini";
-    private static final String DEFAULT_CONFIG_FILE = CONFIG_FILE.replaceAll("file:", "");
+    private static final String DEFAULT_CONFIG_FILE = "/data/taole.ini";
     private static final String DRIVER_FIREFOX = "firefox";
     private static final String DRIVER_CHROME = "chrome";
     private static final String DRIVER_PHANTOMJS = "phantomjs";
