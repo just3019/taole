@@ -46,6 +46,9 @@ public class SuningPageProcesser implements PageProcessor {
         scanProduct.setName(name);
         scanProduct.setProductId(suningTask.getProductId());
         scanProduct.setSource("1");
+        if (scanProduct.getPrice() == 0) {
+            return;
+        }
         scanProductService.save(scanProduct);
     }
 
