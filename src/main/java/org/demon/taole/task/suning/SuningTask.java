@@ -1,4 +1,4 @@
-package org.demon.taole.task.jd;
+package org.demon.taole.task.suning;
 
 import lombok.extern.apachecommons.CommonsLog;
 import org.demon.pool.ExecutorPool;
@@ -30,7 +30,7 @@ public class SuningTask {
     @Autowired
     private ScanProductService scanProductService;
 
-    @Scheduled(cron = "0/30 * * * * ?")
+    @Scheduled(cron = "0/5 * * * * ?")
     public void snUrlTask() {
         SuningTaskExample example = new SuningTaskExample();
         example.createCriteria().andStatusEqualTo("1");

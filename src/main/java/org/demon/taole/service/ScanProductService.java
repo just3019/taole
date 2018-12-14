@@ -79,8 +79,8 @@ public class ScanProductService {
     }
 
     private void sendMail(ScanProduct scanProduct) {
-        String subject = StrUtil.format("{}价格改变", scanProduct.getName());
-        String content = StrUtil.format("当前价格：{}\n 商品地址：{}", scanProduct.getPrice(), scanProduct.getUrl());
+        String subject = StrUtil.format("监控反馈");
+        String content = StrUtil.format("{}", scanProduct.getUrl());
         mailService.send(subject, content);
     }
 
