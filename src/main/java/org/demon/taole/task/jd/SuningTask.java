@@ -34,7 +34,7 @@ public class SuningTask {
         example.createCriteria().andStatusEqualTo("1");
         Optional.ofNullable(suningTaskMapper.selectByExample(example)).orElseGet(ArrayList::new)
                 .forEach(a -> ExecutorPool.getInstance().execute(() ->
-                        Spider.create(new SuningPageProcesser(a.getProductId(), scanProductService))
+                        Spider.create(new SuningPageProcesser(a, scanProductService))
                                 .addUrl(a.getUrl())
                                 .setDownloader(new SeleniumDownloader()).run()));
     }
