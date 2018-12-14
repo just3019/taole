@@ -23,6 +23,6 @@ logging.file: logs/${spring.application.name}.log
 logging:
   level:
     org.demon: info
-    org.demon.taole.mapper: error
+    org.demon.taole.mapper: debug
 
 
