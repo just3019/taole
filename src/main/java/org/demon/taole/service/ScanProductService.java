@@ -63,7 +63,7 @@ public class ScanProductService {
         ScanProduct scanProduct = list.get(0);
         if (!scanProduct.getPrice().equals(pojo.getPrice())) {
             scanProduct.setPrice(pojo.getPrice());
-            scanProductMapper.updateByExampleSelective(scanProduct, example);
+            scanProductMapper.updateByPrimaryKeySelective(scanProduct);
             sendMail(scanProduct);
         }
         scanProduct.setPrice(pojo.getPrice());
