@@ -157,12 +157,6 @@
       <if test="source != null">
         #{source,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null">
-        #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatetime != null">
-        #{updatetime,jdbcType=TIMESTAMP},
-      </if>
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
       </if>
@@ -192,12 +186,6 @@
       <if test="record.source != null">
         source = #{record.source,jdbcType=VARCHAR},
       </if>
-      <if test="record.createtime != null">
-        createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updatetime != null">
-        updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.url != null">
         url = #{record.url,jdbcType=VARCHAR},
       </if>
@@ -213,8 +201,6 @@
       product_id = #{record.productId,jdbcType=VARCHAR},
       price = #{record.price,jdbcType=INTEGER},
       source = #{record.source,jdbcType=VARCHAR},
-      createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
       url = #{record.url,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -235,12 +221,6 @@
       <if test="source != null">
         source = #{source,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null">
-        createtime = #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatetime != null">
-        updatetime = #{updatetime,jdbcType=TIMESTAMP},
-      </if>
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
       </if>
@@ -253,8 +233,6 @@
       product_id = #{productId,jdbcType=VARCHAR},
       price = #{price,jdbcType=INTEGER},
       source = #{source,jdbcType=VARCHAR},
-      createtime = #{createtime,jdbcType=TIMESTAMP},
-      updatetime = #{updatetime,jdbcType=TIMESTAMP},
       url = #{url,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>

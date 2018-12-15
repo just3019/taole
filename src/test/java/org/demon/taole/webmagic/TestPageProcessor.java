@@ -22,22 +22,19 @@ public class TestPageProcessor implements PageProcessor {
     private Site site;
 
     public static void main(String[] args) {
-//        System.out.println(System.getProperty("user.dir"));
-//        System.out.println(TestPageProcessor.class.getResource("/"));
-//        Spider.create(new TestPageProcessor())
-//                .addUrl("https://product.suning.com/0000000000/10606649860.html")
-//                .setDownloader(new SeleniumDownloader())
-//                .thread(5).run();
         Spider.create(new TestPageProcessor())
-                .addUrl("https://search.suning.com/iphonexsmax/")
+                .addUrl("https://product.suning.com/0000000000/10620853778.html")
                 .setDownloader(new SeleniumDownloader())
                 .thread(5).run();
+//        Spider.create(new TestPageProcessor())
+//                .addUrl("https://search.suning.com/iphonexsmax/")
+//                .setDownloader(new SeleniumDownloader())
+//                .thread(5).run();
     }
 
     @Override
     public void process(Page page) {
         Html html = page.getHtml();
-        log.info(html.xpath("//*[@id=\"0000000000-10606649860\"]"));
         String name = html.xpath("//*[@id=\"itemDisplayName\"]/text()").toString();
         String price = page.getHtml().xpath("//*[@id=\"mainPrice\"]/dl[1]/dd/span[1]/text()").toString();
         log.info(StrUtil.format("name:{},\nprice:{}", name, price));
