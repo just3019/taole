@@ -138,6 +138,7 @@
       </if>
     </trim>
   </insert>
+
   <select id="countByExample" parameterType="org.demon.taole.pojo.CommodityPriceExample" resultType="java.lang.Long">
     select count(*) from commodity_price
     <if test="_parameter != null">
@@ -196,4 +197,12 @@
       createtime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <insert id="insertByBatch">
+    insert into commodity_price(`commodity_id`, `price`) values
+    <foreach collection="list" item="s" index="index" separator=",">
+      (#{s.commodityId}, #{s.price})
+    </foreach>
+  </insert>
+  
 </mapper>

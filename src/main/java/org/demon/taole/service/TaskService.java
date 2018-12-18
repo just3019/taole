@@ -2,15 +2,26 @@ package org.demon.taole.service;
 
 import org.demon.bean.PageData;
 import org.demon.exception.BusinessException;
+import org.demon.taole.bean.TaskFeedback;
 import org.demon.taole.bean.TaskQuery;
+import org.demon.taole.mapper.CommodityMapper;
+import org.demon.taole.mapper.CommodityPriceMapper;
 import org.demon.taole.mapper.TaskMapper;
+import org.demon.taole.pojo.Commodity;
+import org.demon.taole.pojo.CommodityExample;
+import org.demon.taole.pojo.CommodityPrice;
 import org.demon.taole.pojo.Task;
 import org.demon.taole.pojo.TaskExample;
 import org.demon.util.FunctionUtil;
+import org.demon.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * desc:
@@ -23,6 +34,10 @@ public class TaskService {
 
     @Autowired
     private TaskMapper taskMapper;
+    @Autowired
+    private CommodityMapper commodityMapper;
+    @Autowired
+    private CommodityPriceMapper commodityPriceMapper;
 
 
     public Task save(Task task) {
@@ -62,4 +77,46 @@ public class TaskService {
     public void delete(Integer id) {
         taskMapper.deleteByPrimaryKey(id);
     }
+
+
+    @Transactional
+    public void feedback(TaskFeedback taskFeedback) {
+        Optional.ofNullable(taskFeedback).orElseThrow(() -> new BusinessException(-2, "参数错误"))
+                .feedbacks.forEach(this::feedback);
+    }
+
+    @Transactional
+    public void feedback(TaskFeedback.Feedback feedback) {
+        Commodity commodity = new Commodity();
+        commodity.setTaskId(feedback.taskId);
+        commodity.setName(feedback.name);
+        commodity.setLowprice(feedback.lowPrice);
+        commodity.setPrice(feedback.price);
+        commodity.setProductId(feedback.productId);
+        commodity.setUrl(feedback.url);
+        CommodityExample example = new CommodityExample();
+        example.createCriteria().andProductIdEqualTo(feedback.productId).andTaskIdEqualTo(feedback.taskId);
+        List<Commodity> list = Optional.ofNullable(commodityMapper.selectByExample(example)).orElseGet(ArrayList::new);
+        int count = list.size();
+        if (count == 0) {
+            commodityMapper.insertSelective(commodity);
+        } else {
+            commodity.setId(list.get(0).getId());
+            commodityMapper.updateByPrimaryKeySelective(commodity);
+        }
+        List<CommodityPrice> commodityPrices = feedback.feedbackPrices.stream().map(a -> convert(a,
+                commodity.getId())).collect(Collectors.toList());
+        if (StringUtil.isNotEmpty(commodityPrices)) {
+            commodityPriceMapper.insertByBatch(commodityPrices);
+        }
+    }
+
+    private CommodityPrice convert(TaskFeedback.FeedbackPrice p, Integer commodityId) {
+        CommodityPrice commodityPrice = new CommodityPrice();
+        commodityPrice.setCommodityId(commodityId);
+        commodityPrice.setPrice(p.price);
+        return commodityPrice;
+    }
+
+
 }

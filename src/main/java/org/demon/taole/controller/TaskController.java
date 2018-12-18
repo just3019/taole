@@ -2,6 +2,7 @@ package org.demon.taole.controller;
 
 import org.demon.bean.PageData;
 import org.demon.exception.BusinessException;
+import org.demon.taole.bean.TaskFeedback;
 import org.demon.taole.bean.TaskQuery;
 import org.demon.taole.pojo.Task;
 import org.demon.taole.service.TaskService;
@@ -52,6 +53,12 @@ public class TaskController {
     @DeleteMapping(value = "/task/{id}")
     public void delete(@PathVariable("id") Integer id){
         taskService.delete(id);
+    }
+
+    
+    @PostMapping(value = "/task/feedback")
+    public void feedback(@RequestBody TaskFeedback taskFeedback) {
+        taskService.feedback(taskFeedback);
     }
 
 }

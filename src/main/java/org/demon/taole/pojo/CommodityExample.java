@@ -445,6 +445,66 @@ public class CommodityExample {
             return (Criteria) this;
         }
 
+        public Criteria andLowpriceIsNull() {
+            addCriterion("lowprice is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowpriceIsNotNull() {
+            addCriterion("lowprice is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowpriceEqualTo(Integer value) {
+            addCriterion("lowprice =", value, "lowprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowpriceNotEqualTo(Integer value) {
+            addCriterion("lowprice <>", value, "lowprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowpriceGreaterThan(Integer value) {
+            addCriterion("lowprice >", value, "lowprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowpriceGreaterThanOrEqualTo(Integer value) {
+            addCriterion("lowprice >=", value, "lowprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowpriceLessThan(Integer value) {
+            addCriterion("lowprice <", value, "lowprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowpriceLessThanOrEqualTo(Integer value) {
+            addCriterion("lowprice <=", value, "lowprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowpriceIn(List<Integer> values) {
+            addCriterion("lowprice in", values, "lowprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowpriceNotIn(List<Integer> values) {
+            addCriterion("lowprice not in", values, "lowprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowpriceBetween(Integer value1, Integer value2) {
+            addCriterion("lowprice between", value1, value2, "lowprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowpriceNotBetween(Integer value1, Integer value2) {
+            addCriterion("lowprice not between", value1, value2, "lowprice");
+            return (Criteria) this;
+        }
+
         public Criteria andUrlIsNull() {
             addCriterion("url is null");
             return (Criteria) this;

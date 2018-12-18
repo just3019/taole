@@ -31,4 +31,6 @@ public interface CommodityPriceMapper {
     int updateByPrimaryKeySelective(CommodityPrice record);
 
     int updateByPrimaryKey(CommodityPrice record);
+
+    void insertByBatch(List<CommodityPrice> commodityPrices);
 }

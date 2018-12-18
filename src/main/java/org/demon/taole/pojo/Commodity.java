@@ -13,6 +13,8 @@ public class Commodity {
 
     private Integer price;
 
+    private Integer lowprice;
+
     private String url;
 
     private Date createtime;
@@ -57,6 +59,14 @@ public class Commodity {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public Integer getLowprice() {
+        return lowprice;
+    }
+
+    public void setLowprice(Integer lowprice) {
+        this.lowprice = lowprice;
     }
 
     public String getUrl() {
