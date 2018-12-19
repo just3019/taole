@@ -8,6 +8,7 @@ import org.demon.taole.pojo.SuningTaskExample;
 import org.demon.taole.service.ScanProductService;
 import org.demon.taole.service.suning.SuningPageProcesser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Spider;
 
@@ -29,7 +30,7 @@ public class SuningTask {
     @Autowired
     private ScanProductService scanProductService;
 
-    //    @Scheduled(cron = "0/30 * * * * ?")
+    @Scheduled(cron = "0/60 * * * * ?")
     public void snUrlTask() {
         SuningTaskExample example = new SuningTaskExample();
         example.createCriteria().andStatusEqualTo("1");

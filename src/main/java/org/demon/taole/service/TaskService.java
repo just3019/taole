@@ -102,6 +102,9 @@ public class TaskService {
             commodityMapper.insertSelective(commodity);
         } else {
             commodity.setId(list.get(0).getId());
+            if (list.get(0).getLowprice() <= commodity.getLowprice()) {
+                commodity.setLowprice(null);
+            }
             commodityMapper.updateByPrimaryKeySelective(commodity);
         }
         List<CommodityPrice> commodityPrices = feedback.feedbackPrices.stream().map(a -> convert(a,

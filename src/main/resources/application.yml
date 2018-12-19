@@ -1,3 +1,6 @@
+server:
+  port: 21000
+
 spring:
   application:
     name: taole
