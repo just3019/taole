@@ -51,14 +51,19 @@ public class TaskController {
     }
 
     @DeleteMapping(value = "/task/{id}")
-    public void delete(@PathVariable("id") Integer id){
+    public void delete(@PathVariable("id") Integer id) {
         taskService.delete(id);
     }
 
-    
-    @PostMapping(value = "/task/feedback")
-    public void feedback(@RequestBody TaskFeedback taskFeedback) {
+
+    @PostMapping(value = "/task/feedbacks")
+    public void feedbacks(@RequestBody TaskFeedback taskFeedback) {
         taskService.feedback(taskFeedback);
+    }
+
+    @PostMapping(value = "/task/feedback")
+    public void feedback(@RequestBody TaskFeedback.Feedback feedback) {
+        taskService.feedback(feedback);
     }
 
 }
