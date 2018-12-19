@@ -1,7 +1,10 @@
 package org.demon.taole.service;
 
+import cn.hutool.core.util.NumberUtil;
 import org.demon.bean.PageData;
 import org.demon.exception.BusinessException;
+import org.demon.taole.bean.Feedback;
+import org.demon.taole.bean.FeedbackPrice;
 import org.demon.taole.bean.TaskFeedback;
 import org.demon.taole.bean.TaskQuery;
 import org.demon.taole.mapper.CommodityMapper;
@@ -86,16 +89,17 @@ public class TaskService {
     }
 
     @Transactional
-    public void feedback(TaskFeedback.Feedback feedback) {
+    public void feedback(Feedback feedback) {
         Commodity commodity = new Commodity();
-        commodity.setTaskId(feedback.taskId);
+        int taskId = Optional.ofNullable(feedback.taskId).orElse(0);
+        commodity.setTaskId(taskId);
         commodity.setName(feedback.name);
-        commodity.setLowprice(feedback.lowPrice);
-        commodity.setPrice(feedback.price);
+        commodity.setLowprice(NumberUtil.parseInt(feedback.lowPrice));
+        commodity.setPrice(NumberUtil.parseInt(feedback.price));
         commodity.setProductId(feedback.productId);
         commodity.setUrl(feedback.url);
         CommodityExample example = new CommodityExample();
-        example.createCriteria().andProductIdEqualTo(feedback.productId).andTaskIdEqualTo(feedback.taskId);
+        example.createCriteria().andProductIdEqualTo(feedback.productId).andTaskIdEqualTo(taskId);
         List<Commodity> list = Optional.ofNullable(commodityMapper.selectByExample(example)).orElseGet(ArrayList::new);
         int count = list.size();
         if (count == 0) {
@@ -114,10 +118,10 @@ public class TaskService {
         }
     }
 
-    private CommodityPrice convert(TaskFeedback.FeedbackPrice p, Integer commodityId) {
+    private CommodityPrice convert(FeedbackPrice p, Integer commodityId) {
         CommodityPrice commodityPrice = new CommodityPrice();
         commodityPrice.setCommodityId(commodityId);
-        commodityPrice.setPrice(p.price);
+        commodityPrice.setPrice(NumberUtil.parseInt(p.price));
         return commodityPrice;
     }
 

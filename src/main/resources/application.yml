@@ -26,6 +26,7 @@ logging.file: logs/${spring.application.name}.log
 logging:
   level:
     org.demon: info
+    org.demon.advice: debug
     org.demon.taole.mapper: debug
 
 

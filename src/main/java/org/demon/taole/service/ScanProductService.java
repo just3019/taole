@@ -40,7 +40,6 @@ public class ScanProductService {
      * @param pojo {@link ScanProduct}
      * @return {@link ScanProduct}
      */
-    @Transactional
     public ScanProduct save(ScanProduct pojo) {
         ScanProductExample example = new ScanProductExample();
         example.createCriteria().andProductIdEqualTo(pojo.getProductId());
@@ -52,13 +51,6 @@ public class ScanProductService {
                     new BusinessException(-2, "scanProduct save error"));
             scanProductPriceService.save(convert(pojo));
             return pojo;
-        }
-        if (count > 1) {
-            for (int i = 0; i < count; i++) {
-                if (i == 0) continue;
-                scanProductMapper.deleteByPrimaryKey(list.get(i).getId());
-                scanProductPriceService.delete(list.get(i).getId());
-            }
         }
         ScanProduct scanProduct = list.get(0);
         if (!scanProduct.getPrice().equals(pojo.getPrice())) {

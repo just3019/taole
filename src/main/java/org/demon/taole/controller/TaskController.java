@@ -2,6 +2,7 @@ package org.demon.taole.controller;
 
 import org.demon.bean.PageData;
 import org.demon.exception.BusinessException;
+import org.demon.taole.bean.Feedback;
 import org.demon.taole.bean.TaskFeedback;
 import org.demon.taole.bean.TaskQuery;
 import org.demon.taole.pojo.Task;
@@ -62,7 +63,7 @@ public class TaskController {
     }
 
     @PostMapping(value = "/task/feedback")
-    public void feedback(@RequestBody TaskFeedback.Feedback feedback) {
+    public void feedback(@RequestBody Feedback feedback) {
         taskService.feedback(feedback);
     }
 
