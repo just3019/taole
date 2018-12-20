@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import lombok.extern.apachecommons.CommonsLog;
 import org.demon.bean.PageData;
 import org.demon.exception.BusinessException;
+import org.demon.pool.ExecutorPool;
 import org.demon.taole.bean.Feedback;
 import org.demon.taole.bean.FeedbackPrice;
 import org.demon.taole.bean.TaskFeedback;
@@ -90,7 +91,7 @@ public class TaskService {
     @Transactional
     public void feedback(TaskFeedback taskFeedback) {
         Optional.ofNullable(taskFeedback).orElseThrow(() -> new BusinessException(-2, "参数错误"))
-                .feedbacks.forEach(this::feedback);
+                .feedbacks.forEach(a -> ExecutorPool.getInstance().execute(() -> feedback(a)));
     }
 
     @Transactional
