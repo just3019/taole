@@ -110,17 +110,15 @@ public class TaskService {
         if (count == 0) {
             commodityMapper.insertSelective(commodity);
         } else {
-            commodity.setId(list.get(0).getId());
             //当原来的最低价大于现在的最低价，则发送邮件通知
-            if (list.get(0).getLowprice() > commodity.getLowprice()) {
+            if (list.get(0).getLowprice() > commodity.getLowprice()){
+                commodity.setId(list.get(0).getId());
+                commodityMapper.updateByPrimaryKeySelective(commodity);
                 log.info(StrUtil.format("\n监控反馈:\n{}\n{}", commodity.getName(), commodity.getLowprice()));
                 String subject = StrUtil.format("监控反馈");
                 String content = StrUtil.format("{}", commodity.getUrl());
                 mailService.send(subject, content);
-            } else {
-                commodity.setLowprice(null);
             }
-            commodityMapper.updateByPrimaryKeySelective(commodity);
         }
         List<CommodityPrice> commodityPrices = feedback.feedbackPrices.stream().map(a -> convert(a,
                 commodity.getId())).collect(Collectors.toList());
