@@ -7,7 +7,7 @@
     <result column="product_id" jdbcType="VARCHAR" property="productId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="price" jdbcType="INTEGER" property="price" />
-    <result column="lowprice" jdbcType="INTEGER" property="lowprice" />
+    <result column="low_price" jdbcType="INTEGER" property="lowPrice" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
@@ -71,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, task_id, product_id, name, price, lowprice, url, createtime, updatetime
+    id, task_id, product_id, name, price, low_price, url, createtime, updatetime
   </sql>
   <select id="selectByExample" parameterType="org.demon.taole.pojo.CommodityExample" resultMap="BaseResultMap">
     select
@@ -114,10 +114,10 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.demon.taole.pojo.Commodity" useGeneratedKeys="true">
     insert into commodity (task_id, product_id, name, 
-      price, lowprice, url, 
+      price, low_price, url, 
       createtime, updatetime)
     values (#{taskId,jdbcType=INTEGER}, #{productId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{price,jdbcType=INTEGER}, #{lowprice,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
+      #{price,jdbcType=INTEGER}, #{lowPrice,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
       #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.demon.taole.pojo.Commodity" useGeneratedKeys="true">
@@ -135,8 +135,8 @@
       <if test="price != null">
         price,
       </if>
-      <if test="lowprice != null">
-        lowprice,
+      <if test="lowPrice != null">
+        low_price,
       </if>
       <if test="url != null">
         url,
@@ -161,8 +161,8 @@
       <if test="price != null">
         #{price,jdbcType=INTEGER},
       </if>
-      <if test="lowprice != null">
-        #{lowprice,jdbcType=INTEGER},
+      <if test="lowPrice != null">
+        #{lowPrice,jdbcType=INTEGER},
       </if>
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
@@ -199,8 +199,8 @@
       <if test="record.price != null">
         price = #{record.price,jdbcType=INTEGER},
       </if>
-      <if test="record.lowprice != null">
-        lowprice = #{record.lowprice,jdbcType=INTEGER},
+      <if test="record.lowPrice != null">
+        low_price = #{record.lowPrice,jdbcType=INTEGER},
       </if>
       <if test="record.url != null">
         url = #{record.url,jdbcType=VARCHAR},
@@ -223,7 +223,7 @@
       product_id = #{record.productId,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       price = #{record.price,jdbcType=INTEGER},
-      lowprice = #{record.lowprice,jdbcType=INTEGER},
+      low_price = #{record.lowPrice,jdbcType=INTEGER},
       url = #{record.url,jdbcType=VARCHAR},
       createtime = #{record.createtime,jdbcType=TIMESTAMP},
       updatetime = #{record.updatetime,jdbcType=TIMESTAMP}
@@ -246,8 +246,8 @@
       <if test="price != null">
         price = #{price,jdbcType=INTEGER},
       </if>
-      <if test="lowprice != null">
-        lowprice = #{lowprice,jdbcType=INTEGER},
+      <if test="lowPrice != null">
+        low_price = #{lowPrice,jdbcType=INTEGER},
       </if>
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
@@ -267,7 +267,7 @@
       product_id = #{productId,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       price = #{price,jdbcType=INTEGER},
-      lowprice = #{lowprice,jdbcType=INTEGER},
+      low_price = #{lowPrice,jdbcType=INTEGER},
       url = #{url,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       updatetime = #{updatetime,jdbcType=TIMESTAMP}

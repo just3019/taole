@@ -445,63 +445,63 @@ public class CommodityExample {
             return (Criteria) this;
         }
 
-        public Criteria andLowpriceIsNull() {
-            addCriterion("lowprice is null");
+        public Criteria andLowPriceIsNull() {
+            addCriterion("low_price is null");
             return (Criteria) this;
         }
 
-        public Criteria andLowpriceIsNotNull() {
-            addCriterion("lowprice is not null");
+        public Criteria andLowPriceIsNotNull() {
+            addCriterion("low_price is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLowpriceEqualTo(Integer value) {
-            addCriterion("lowprice =", value, "lowprice");
+        public Criteria andLowPriceEqualTo(Integer value) {
+            addCriterion("low_price =", value, "lowPrice");
             return (Criteria) this;
         }
 
-        public Criteria andLowpriceNotEqualTo(Integer value) {
-            addCriterion("lowprice <>", value, "lowprice");
+        public Criteria andLowPriceNotEqualTo(Integer value) {
+            addCriterion("low_price <>", value, "lowPrice");
             return (Criteria) this;
         }
 
-        public Criteria andLowpriceGreaterThan(Integer value) {
-            addCriterion("lowprice >", value, "lowprice");
+        public Criteria andLowPriceGreaterThan(Integer value) {
+            addCriterion("low_price >", value, "lowPrice");
             return (Criteria) this;
         }
 
-        public Criteria andLowpriceGreaterThanOrEqualTo(Integer value) {
-            addCriterion("lowprice >=", value, "lowprice");
+        public Criteria andLowPriceGreaterThanOrEqualTo(Integer value) {
+            addCriterion("low_price >=", value, "lowPrice");
             return (Criteria) this;
         }
 
-        public Criteria andLowpriceLessThan(Integer value) {
-            addCriterion("lowprice <", value, "lowprice");
+        public Criteria andLowPriceLessThan(Integer value) {
+            addCriterion("low_price <", value, "lowPrice");
             return (Criteria) this;
         }
 
-        public Criteria andLowpriceLessThanOrEqualTo(Integer value) {
-            addCriterion("lowprice <=", value, "lowprice");
+        public Criteria andLowPriceLessThanOrEqualTo(Integer value) {
+            addCriterion("low_price <=", value, "lowPrice");
             return (Criteria) this;
         }
 
-        public Criteria andLowpriceIn(List<Integer> values) {
-            addCriterion("lowprice in", values, "lowprice");
+        public Criteria andLowPriceIn(List<Integer> values) {
+            addCriterion("low_price in", values, "lowPrice");
             return (Criteria) this;
         }
 
-        public Criteria andLowpriceNotIn(List<Integer> values) {
-            addCriterion("lowprice not in", values, "lowprice");
+        public Criteria andLowPriceNotIn(List<Integer> values) {
+            addCriterion("low_price not in", values, "lowPrice");
             return (Criteria) this;
         }
 
-        public Criteria andLowpriceBetween(Integer value1, Integer value2) {
-            addCriterion("lowprice between", value1, value2, "lowprice");
+        public Criteria andLowPriceBetween(Integer value1, Integer value2) {
+            addCriterion("low_price between", value1, value2, "lowPrice");
             return (Criteria) this;
         }
 
-        public Criteria andLowpriceNotBetween(Integer value1, Integer value2) {
-            addCriterion("lowprice not between", value1, value2, "lowprice");
+        public Criteria andLowPriceNotBetween(Integer value1, Integer value2) {
+            addCriterion("low_price not between", value1, value2, "lowPrice");
             return (Criteria) this;
         }
 

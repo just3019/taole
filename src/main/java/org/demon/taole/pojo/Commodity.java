@@ -13,7 +13,7 @@ public class Commodity {
 
     private Integer price;
 
-    private Integer lowprice;
+    private Integer lowPrice;
 
     private String url;
 
@@ -61,12 +61,12 @@ public class Commodity {
         this.price = price;
     }
 
-    public Integer getLowprice() {
-        return lowprice;
+    public Integer getLowPrice() {
+        return lowPrice;
     }
 
-    public void setLowprice(Integer lowprice) {
-        this.lowprice = lowprice;
+    public void setLowPrice(Integer lowPrice) {
+        this.lowPrice = lowPrice;
     }
 
     public String getUrl() {

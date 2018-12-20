@@ -100,7 +100,7 @@ public class TaskService {
         int taskId = Optional.ofNullable(feedback.taskId).orElse(0);
         commodity.setTaskId(taskId);
         commodity.setName(feedback.name);
-        commodity.setLowprice(NumberUtil.parseInt(feedback.lowPrice));
+        commodity.setLowPrice(NumberUtil.parseInt(feedback.lowPrice));
         commodity.setPrice(NumberUtil.parseInt(feedback.price));
         commodity.setProductId(feedback.productId);
         commodity.setUrl(feedback.url);
@@ -112,10 +112,10 @@ public class TaskService {
             commodityMapper.insertSelective(commodity);
         } else {
             //当原来的最低价大于现在的最低价，则发送邮件通知
-            if (list.get(0).getLowprice() > commodity.getLowprice()){
+            if (list.get(0).getLowPrice() > commodity.getLowPrice()){
                 commodity.setId(list.get(0).getId());
                 commodityMapper.updateByPrimaryKeySelective(commodity);
-                log.info(StrUtil.format("\n监控反馈:\n{}\n{}", commodity.getName(), commodity.getLowprice()));
+                log.info(StrUtil.format("\n监控反馈:\n{}\n{}", commodity.getName(), commodity.getLowPrice()));
                 String subject = StrUtil.format("监控反馈");
                 String content = StrUtil.format("{}", commodity.getUrl());
                 mailService.send(subject, content);
