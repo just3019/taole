@@ -96,6 +96,9 @@ public class TaskService {
 
     @Transactional
     public void feedback(Feedback feedback) {
+        if (NumberUtil.parseInt(feedback.lowPrice) <= 0) {
+            return;
+        }
         Commodity commodity = new Commodity();
         int taskId = Optional.ofNullable(feedback.taskId).orElse(0);
         commodity.setTaskId(taskId);
@@ -112,7 +115,7 @@ public class TaskService {
             commodityMapper.insertSelective(commodity);
         } else {
             //当原来的最低价大于现在的最低价，则发送邮件通知
-            if (list.get(0).getLowPrice() > commodity.getLowPrice()){
+            if (list.get(0).getLowPrice() > commodity.getLowPrice()) {
                 commodity.setId(list.get(0).getId());
                 commodityMapper.updateByPrimaryKeySelective(commodity);
                 log.info(StrUtil.format("\n监控反馈:\n{}\n{}", commodity.getName(), commodity.getLowPrice()));
