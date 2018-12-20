@@ -1,6 +1,8 @@
 package org.demon.taole.service;
 
 import cn.hutool.core.util.NumberUtil;
+import cn.hutool.core.util.StrUtil;
+import lombok.extern.apachecommons.CommonsLog;
 import org.demon.bean.PageData;
 import org.demon.exception.BusinessException;
 import org.demon.taole.bean.Feedback;
@@ -33,6 +35,7 @@ import java.util.stream.Collectors;
  * @date 2018-12-18 11:55
  */
 @Service
+@CommonsLog
 public class TaskService {
 
     @Autowired
@@ -41,6 +44,8 @@ public class TaskService {
     private CommodityMapper commodityMapper;
     @Autowired
     private CommodityPriceMapper commodityPriceMapper;
+    @Autowired
+    private MailService mailService;
 
 
     public Task save(Task task) {
@@ -106,7 +111,13 @@ public class TaskService {
             commodityMapper.insertSelective(commodity);
         } else {
             commodity.setId(list.get(0).getId());
-            if (list.get(0).getLowprice() <= commodity.getLowprice()) {
+            //当原来的最低价大于现在的最低价，则发送邮件通知
+            if (list.get(0).getLowprice() > commodity.getLowprice()) {
+                log.info(StrUtil.format("\n监控反馈:\n{}\n{}", commodity.getName(), commodity.getLowprice()));
+                String subject = StrUtil.format("监控反馈");
+                String content = StrUtil.format("{}", commodity.getUrl());
+                mailService.send(subject, content);
+            } else {
                 commodity.setLowprice(null);
             }
             commodityMapper.updateByPrimaryKeySelective(commodity);
