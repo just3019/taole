@@ -124,8 +124,9 @@ public class TaskService {
                 mailService.send(subject, content);
             }
         }
+        Integer commodityId = list.get(0).getId();
         List<CommodityPrice> commodityPrices = feedback.feedbackPrices.stream().map(a -> convert(a,
-                commodity.getId())).collect(Collectors.toList());
+                commodityId)).collect(Collectors.toList());
         if (StringUtil.isNotEmpty(commodityPrices)) {
             commodityPriceMapper.insertByBatch(commodityPrices);
         }
