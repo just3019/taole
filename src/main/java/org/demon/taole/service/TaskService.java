@@ -101,10 +101,12 @@ public class TaskService {
         }
         Commodity commodity = new Commodity();
         int taskId = Optional.ofNullable(feedback.taskId).orElse(0);
+        int lowPrice = NumberUtil.parseInt(feedback.lowPrice);
+        int price = NumberUtil.parseInt(feedback.price);
         commodity.setTaskId(taskId);
         commodity.setName(feedback.name);
-        commodity.setLowPrice(NumberUtil.parseInt(feedback.lowPrice));
-        commodity.setPrice(NumberUtil.parseInt(feedback.price));
+        commodity.setLowPrice(lowPrice);
+        commodity.setPrice(price);
         commodity.setProductId(feedback.productId);
         commodity.setUrl(feedback.url);
         CommodityExample example = new CommodityExample();
@@ -117,14 +119,22 @@ public class TaskService {
             commodityId = commodity.getId();
         } else {
             commodityId = list.get(0).getId();
-            //当原来的最低价大于现在的最低价，则发送邮件通知
-            if (list.get(0).getLowPrice() > commodity.getLowPrice()) {
+            // 1.当价格变动，更新
+            // 2.当原来的最低价大于现在的最低价，并发送邮件通知
+            if (!list.get(0).getPrice().equals(commodity.getPrice())) {
                 commodity.setId(commodityId);
+                commodity.setLowPrice(null);
+                commodity.setName(null);
+                commodity.setProductId(null);
+                commodity.setUrl(null);
+                commodity.setTaskId(null);
+                if (list.get(0).getLowPrice() > lowPrice) {
+                    commodity.setLowPrice(lowPrice);
+                    String subject = StrUtil.format("监控反馈");
+                    String content = list.get(0).getUrl();
+                    mailService.send(subject, content);
+                }
                 commodityMapper.updateByPrimaryKeySelective(commodity);
-                log.info(StrUtil.format("\n监控反馈:\n{}\n{}", commodity.getName(), commodity.getLowPrice()));
-                String subject = StrUtil.format("监控反馈");
-                String content = StrUtil.format("{}", commodity.getUrl());
-                mailService.send(subject, content);
             }
         }
         List<CommodityPrice> commodityPrices = feedback.feedbackPrices.stream().map(a -> convert(a,
