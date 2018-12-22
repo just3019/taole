@@ -74,7 +74,7 @@ public class ScanProductService {
         log.info(StrUtil.format("\n监控反馈:\n{}\n{}", scanProduct.getName(), scanProduct.getPrice()));
         String subject = StrUtil.format("监控反馈");
         String content = StrUtil.format("{}", scanProduct.getUrl());
-        mailService.send(subject, content);
+        mailService.send(subject, content, 1);
     }
 
     public ScanProduct get() {

@@ -26,7 +26,7 @@ public class MailServiceTest {
 
 
     @Test
-    public void test(){
-        mailService.send("监控反馈", "https://item.jd.com/21968806158.html");
+    public void test() {
+        mailService.send("监控反馈", "https://item.jd.com/21968806158.html", "1");
     }
 }
