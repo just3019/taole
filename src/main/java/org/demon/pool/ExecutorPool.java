@@ -18,7 +18,7 @@ import java.util.function.Supplier;
  */
 @CommonsLog
 public final class ExecutorPool {
-    private static final int THREADS = 4;
+    private static final int THREADS = 10;
     private static final int SINGLE = 1;
     private static final ExecutorPool instance = newInstance();
     private final ExecutorService EXECUTOR_IO = new ThreadPoolExecutor(THREADS, THREADS, 60L, TimeUnit.SECONDS,

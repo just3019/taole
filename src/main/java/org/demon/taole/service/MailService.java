@@ -28,12 +28,17 @@ public class MailService {
     private JavaMailSender sender;
 
     public void send(String subject, String content) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(recieverAdd);
-        message.setFrom(senderAdd);
-        message.setSubject(subject);
-        message.setText(content);
-        sender.send(message);
-        log.info(StrUtil.format("\n发送邮件成功：\n{}\n{}", subject, content));
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(recieverAdd);
+            message.setFrom(senderAdd);
+            message.setSubject(subject);
+            message.setText(content);
+            sender.send(message);
+            log.info(StrUtil.format("\n发送邮件成功：\n{}\n{}", subject, content));
+        } catch (Exception e) {
+            log.info(e);
+        }
+
     }
 }

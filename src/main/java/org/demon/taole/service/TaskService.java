@@ -132,7 +132,7 @@ public class TaskService {
                     commodity.setLowPrice(lowPrice);
                     String subject = StrUtil.format("监控反馈");
                     String content = list.get(0).getUrl();
-                    mailService.send(subject, content);
+                    ExecutorPool.getInstance().execute(() -> mailService.send(subject, content));
                 }
                 commodityMapper.updateByPrimaryKeySelective(commodity);
             }
