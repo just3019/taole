@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.Optional;
 
 /**
  * desc:
@@ -20,9 +23,13 @@ public class WebController {
     private CommodityService commodityService;
 
 
-    @GetMapping("/web/commodities")
-    public String commodities(ModelMap map){
-        map.addAttribute("commodities", commodityService.select(new CommodityQuery()));
+    @GetMapping("/web/commodities/{taskId}/{page}")
+    public String commodities(ModelMap map, @PathVariable("taskId") Integer taskId, @PathVariable("page") Integer page) {
+        CommodityQuery query = new CommodityQuery();
+        query.taskId = Optional.ofNullable(taskId).orElse(0);
+        query.setPage(Optional.ofNullable(page).orElse(1));
+        query.orderBy = " updatetime desc ";
+        map.addAttribute("commodities", commodityService.select(query));
         return "product/commodity";
     }
 }

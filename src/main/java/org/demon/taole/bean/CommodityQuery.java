@@ -13,4 +13,5 @@ public class CommodityQuery extends PageReq {
     public Integer taskId;
     public String name;
     public String status;
+    public String orderBy;
 }
