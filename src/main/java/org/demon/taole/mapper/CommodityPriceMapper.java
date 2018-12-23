@@ -1,6 +1,8 @@
 package org.demon.taole.mapper;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -33,4 +35,6 @@ public interface CommodityPriceMapper {
     int updateByPrimaryKey(CommodityPrice record);
 
     void insertByBatch(List<CommodityPrice> commodityPrices);
+
+    List<Map<String, Object>> select(Integer id, Date begin, Date end);
 }

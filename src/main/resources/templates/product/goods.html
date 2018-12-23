@@ -20,7 +20,10 @@
         <td th:text="${#strings.trim(commodity.name)}">name</td>
         <td th:text="${commodity.price}">price</td>
         <td th:text="${commodity.lowPrice}">low_price</td>
-        <td><a th:href="${commodity.url}" target="_blank">商品链接</a> | 操作</td>
+        <td>
+            <a th:href="${commodity.url}" target="_blank">商品链接</a> |
+            <a th:href="'/web/stat/'+${commodity.id}" target="_blank">查看波动</a>
+        </td>
     </tr>
 </table>
 </body>

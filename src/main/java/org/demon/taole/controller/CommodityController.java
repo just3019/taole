@@ -29,10 +29,5 @@ public class CommodityController {
         return commodityService.select(query);
     }
 
-    @GetMapping(value = "/commodityPrice/{commodityId}")
-    public PageData<CommodityPrice> select(@PathVariable("commodityId") Integer commodityId){
-        return commodityService.select(commodityId);
-    }
-
 
 }

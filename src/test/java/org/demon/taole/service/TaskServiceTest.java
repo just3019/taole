@@ -1,8 +1,10 @@
 package org.demon.taole.service;
 
+import cn.hutool.core.date.DateUtil;
 import lombok.extern.apachecommons.CommonsLog;
 import org.demon.TaoleApplication;
 import org.demon.taole.bean.TaskQuery;
+import org.demon.taole.mapper.CommodityPriceMapper;
 import org.demon.taole.pojo.Task;
 import org.demon.util.JSONUtil;
 import org.junit.Test;
@@ -20,13 +22,17 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {TaoleApplication.class})//classes 指定启动类,加载环境
-@Transactional
+//@Transactional
 @CommonsLog
 public class TaskServiceTest {
 
 
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private CommodityPriceMapper commodityPriceMapper;
+    @Autowired
+    private CommodityPriceService commodityPriceService;
 
     @Test
     public void test() {
@@ -63,6 +69,13 @@ public class TaskServiceTest {
 
     public void delete(Integer id) {
         taskService.delete(id);
+    }
+
+
+    @Test
+    public void testSelect() {
+        commodityPriceService.deleteTask();
+//        System.out.println(commodityPriceMapper.select(434, DateUtil.beginOfDay(DateUtil.yesterday()), DateUtil.endOfDay(DateUtil.yesterday())));
     }
 
 }

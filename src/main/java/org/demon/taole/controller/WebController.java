@@ -1,6 +1,7 @@
 package org.demon.taole.controller;
 
 import org.demon.taole.bean.CommodityQuery;
+import org.demon.taole.service.CommodityPriceService;
 import org.demon.taole.service.CommodityService;
 import org.demon.util.FunctionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class WebController {
 
     @Autowired
     private CommodityService commodityService;
+    @Autowired
+    private CommodityPriceService commodityPriceService;
 
 
     @GetMapping("/web/goods/{taskId}/{page}")
@@ -36,8 +39,10 @@ public class WebController {
         return "product/goods";
     }
 
-    @GetMapping("/web/stat")
-    public String stat(ModelMap map) {
+    @GetMapping("/web/stat/{commodityId}")
+    public String stat(ModelMap map, @PathVariable("commodityId") Integer commodityId) {
+        map.addAttribute("goods", commodityService.select(commodityId));
+        map.addAttribute("prices", commodityPriceService.select(commodityId));
         return "product/stat";
     }
 }

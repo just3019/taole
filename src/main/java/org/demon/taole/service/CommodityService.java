@@ -14,6 +14,8 @@ import org.demon.util.FunctionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * desc:
  *
@@ -24,8 +26,6 @@ import org.springframework.stereotype.Service;
 public class CommodityService {
     @Autowired
     private CommodityMapper commodityMapper;
-    @Autowired
-    private CommodityPriceMapper commodityPriceMapper;
 
     public PageData<Commodity> select(CommodityQuery query) {
         CommodityExample example = new CommodityExample();
@@ -42,13 +42,8 @@ public class CommodityService {
         return pageData;
     }
 
-    public PageData<CommodityPrice> select(Integer commodityId) {
-        CommodityPriceExample example = new CommodityPriceExample();
-        example.createCriteria().andCommodityIdEqualTo(commodityId)
-                .andCreatetimeGreaterThanOrEqualTo(DateUtil.lastMonth());
-        PageData<CommodityPrice> pageData = new PageData<>();
-        pageData.count = commodityPriceMapper.countByExample(example);
-        pageData.list = commodityPriceMapper.selectByExample(example);
-        return pageData;
+    public Commodity select(Integer id) {
+        return Optional.ofNullable(commodityMapper.selectByPrimaryKey(id)).orElseGet(Commodity::new);
     }
+
 }

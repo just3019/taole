@@ -6,12 +6,28 @@
 </head>
 <body>
 
+<div>
+    <h1 th:text="${goods.name}"></h1>
+    <h2 th:text="'当前价格：'+${goods.price}"></h2>
+    <h2>商品地址：<a th:href="${goods.url}" target="_blank"><span th:text="${goods.url}"></span></a></h2>
+</div>
+
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 <div id="main" style="height:400px"></div>
 
 <!-- ECharts单文件引入 -->
 <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
-<script type="text/javascript">
+<script th:inline="javascript" type="text/javascript">
+
+    var prices = [[${prices}]];
+    xdata = [];
+    data = [];
+    prices.forEach(function (value) {
+        xdata.push(value.createtime);
+        data.push(value.price);
+    });
+
+
     // 路径配置
     require.config({
         paths: {
@@ -22,23 +38,27 @@
     require(
         [
             'echarts',
-            'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            'echarts/chart/line' // 按需加载
         ],
         function (ec) {
             // 基于准备好的dom，初始化echarts图表
             var myChart = ec.init(document.getElementById('main'));
 
-            var option = {
+            option = {
+                title: {
+                    text: '价格变动'
+                },
                 tooltip: {
-                    show: true
+                    trigger: 'axis'
                 },
                 legend: {
-                    data: ['销量']
+                    data: ['价格']
                 },
                 xAxis: [
                     {
                         type: 'category',
-                        data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+                        boundaryGap: false,
+                        data: xdata
                     }
                 ],
                 yAxis: [
@@ -48,9 +68,20 @@
                 ],
                 series: [
                     {
-                        "name": "销量",
-                        "type": "bar",
-                        "data": [5, 20, 40, 10, 10, 20]
+                        name: '价格',
+                        type: 'line',
+                        data: data,
+                        markPoint: {
+                            data: [
+                                {type: 'max', name: '最大值'},
+                                {type: 'min', name: '最小值'}
+                            ]
+                        },
+                        markLine: {
+                            data: [
+                                {type: 'average', name: '平均值'}
+                            ]
+                        }
                     }
                 ]
             };

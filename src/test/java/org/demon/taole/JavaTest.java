@@ -1,7 +1,10 @@
 package org.demon.taole;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
 import org.junit.Test;
+
+import java.util.Date;
 
 /**
  * desc:
@@ -13,7 +16,7 @@ public class JavaTest {
 
     @Test
     public void test(){
-        var str = "¥8568.00";
-        System.out.println(NumberUtil.parseInt(str));
+        System.out.println(DateUtil.beginOfDay(DateUtil.yesterday()));
+        System.out.println(DateUtil.endOfDay(DateUtil.yesterday()));
     }
 }
