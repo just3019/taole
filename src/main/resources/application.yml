@@ -5,12 +5,12 @@ spring:
   application:
     name: taole
   datasource:
-    #    url: jdbc:mysql://localhost:13306/taole?useSSL=false
-    #    username: root
-    #    password: songlinhao3019
-    url: jdbc:mysql://localhost:3306/taole?useSSL=false
+    url: jdbc:mysql://localhost:13306/taole?useSSL=false
     username: root
-    password:
+    password: songlinhao3019
+  #    url: jdbc:mysql://114.115.251.174:13306/taole?useSSL=false
+  #    username: taole
+  #    password: Z##kUK5nFb$&c2WXn89%pLRE34MI1VYP
   quartz:
     job-store-type: jdbc
     jdbc:

@@ -5,6 +5,8 @@
     <title>商品列表</title>
 </head>
 <body>
+<h1 th:text="'总共'+${goods.count}+'条'"></h1>
+
 <table border="1">
     <tr>
         <td width="10">序号</td>
@@ -13,9 +15,9 @@
         <td width="50">最低价格</td>
         <td width="100">操作</td>
     </tr>
-    <tr th:each="commodity,stat : ${commodities.list}">
+    <tr th:each="commodity,stat : ${goods.list}">
         <td th:text="${stat.count}">1</td>
-        <td th:text="${#strings.abbreviate(commodity.name,50)}">name</td>
+        <td th:text="${#strings.trim(commodity.name)}">name</td>
         <td th:text="${commodity.price}">price</td>
         <td th:text="${commodity.lowPrice}">low_price</td>
         <td><a th:href="${commodity.url}" target="_blank">商品链接</a> | 操作</td>

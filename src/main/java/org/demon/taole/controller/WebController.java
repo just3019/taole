@@ -2,6 +2,7 @@ package org.demon.taole.controller;
 
 import org.demon.taole.bean.CommodityQuery;
 import org.demon.taole.service.CommodityService;
+import org.demon.util.FunctionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,13 +24,20 @@ public class WebController {
     private CommodityService commodityService;
 
 
-    @GetMapping("/web/commodities/{taskId}/{page}")
-    public String commodities(ModelMap map, @PathVariable("taskId") Integer taskId, @PathVariable("page") Integer page) {
+    @GetMapping("/web/goods/{taskId}/{page}")
+    public String commodities(ModelMap map, @PathVariable("taskId") Integer taskId, @PathVariable("page") Integer page, String name, Integer size) {
         CommodityQuery query = new CommodityQuery();
         query.taskId = Optional.ofNullable(taskId).orElse(0);
         query.setPage(Optional.ofNullable(page).orElse(1));
+        query.name = Optional.ofNullable(name).orElse(null);
+        FunctionUtil.whenNonNullDo(query::setSize, size);
         query.orderBy = " updatetime desc ";
-        map.addAttribute("commodities", commodityService.select(query));
-        return "product/commodity";
+        map.addAttribute("goods", commodityService.select(query));
+        return "product/goods";
+    }
+
+    @GetMapping("/web/stat")
+    public String stat(ModelMap map) {
+        return "product/stat";
     }
 }

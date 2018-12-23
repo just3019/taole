@@ -21,6 +21,8 @@ public class Commodity {
 
     private Date updatetime;
 
+    private String asdUrl;
+
     public Integer getId() {
         return id;
     }
@@ -91,5 +93,13 @@ public class Commodity {
 
     public void setUpdatetime(Date updatetime) {
         this.updatetime = updatetime;
+    }
+
+    public String getAsdUrl() {
+        return asdUrl;
+    }
+
+    public void setAsdUrl(String asdUrl) {
+        this.asdUrl = asdUrl;
     }
 }
