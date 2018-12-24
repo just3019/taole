@@ -1,6 +1,7 @@
 package org.demon.taole.controller;
 
 import org.demon.bean.PageData;
+import org.demon.exception.BusinessException;
 import org.demon.taole.bean.CommodityQuery;
 import org.demon.taole.bean.EmailQuery;
 import org.demon.taole.pojo.Commodity;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,6 +53,13 @@ public class WebController {
     private void convertAsd(Commodity commodity) {
         commodity.setAsdUrl(commodity.getUrl().replaceAll("jd", "jdasd")
                 .replaceAll("suning", "suningasd"));
+    }
+
+    @GetMapping("/web/goods/sendPrice/{commodityId}/{sendPrice}")
+    @ResponseBody
+    public void updateGoods(@PathVariable("commodityId") Integer commodityId, @PathVariable("sendPrice") Integer sendPrice) {
+        FunctionUtil.check(commodityId == null || commodityId < 1, new BusinessException(-2, "参数错误"));
+        commodityService.update(commodityId, sendPrice);
     }
 
     @GetMapping("/web/stat/{commodityId}")

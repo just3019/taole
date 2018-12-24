@@ -109,6 +109,7 @@ public class TaskService {
         commodity.setPrice(price);
         commodity.setProductId(feedback.productId);
         commodity.setUrl(feedback.url);
+        commodity.setSendPrice(lowPrice);
         CommodityExample example = new CommodityExample();
         example.createCriteria().andProductIdEqualTo(feedback.productId).andTaskIdEqualTo(taskId);
         List<Commodity> list = Optional.ofNullable(commodityMapper.selectByExample(example)).orElseGet(ArrayList::new);
@@ -128,8 +129,9 @@ public class TaskService {
                 commodity.setProductId(null);
                 commodity.setUrl(null);
                 commodity.setTaskId(null);
-                if (list.get(0).getLowPrice() > lowPrice) {
+                if (list.get(0).getSendPrice() > lowPrice) {
                     commodity.setLowPrice(lowPrice);
+                    commodity.setSendPrice(lowPrice);
                     String subject = StrUtil.format("监控反馈");
                     String content = mailService.getEmailContent(feedback.name, lowPrice, feedback.url);
                     ExecutorPool.getInstance().execute(() -> mailService.send(subject, content, taskId, true));

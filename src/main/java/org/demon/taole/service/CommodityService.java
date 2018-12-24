@@ -43,4 +43,10 @@ public class CommodityService {
         return Optional.ofNullable(commodityMapper.selectByPrimaryKey(id)).orElseGet(Commodity::new);
     }
 
+    public void update(Integer id, Integer sendPrice) {
+        Commodity commodity = new Commodity();
+        commodity.setId(id);
+        commodity.setSendPrice(sendPrice);
+        commodityMapper.updateByPrimaryKeySelective(commodity);
+    }
 }
