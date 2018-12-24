@@ -505,6 +505,66 @@ public class CommodityExample {
             return (Criteria) this;
         }
 
+        public Criteria andSendPriceIsNull() {
+            addCriterion("send_price is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPriceIsNotNull() {
+            addCriterion("send_price is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPriceEqualTo(Integer value) {
+            addCriterion("send_price =", value, "sendPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPriceNotEqualTo(Integer value) {
+            addCriterion("send_price <>", value, "sendPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPriceGreaterThan(Integer value) {
+            addCriterion("send_price >", value, "sendPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPriceGreaterThanOrEqualTo(Integer value) {
+            addCriterion("send_price >=", value, "sendPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPriceLessThan(Integer value) {
+            addCriterion("send_price <", value, "sendPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPriceLessThanOrEqualTo(Integer value) {
+            addCriterion("send_price <=", value, "sendPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPriceIn(List<Integer> values) {
+            addCriterion("send_price in", values, "sendPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPriceNotIn(List<Integer> values) {
+            addCriterion("send_price not in", values, "sendPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPriceBetween(Integer value1, Integer value2) {
+            addCriterion("send_price between", value1, value2, "sendPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendPriceNotBetween(Integer value1, Integer value2) {
+            addCriterion("send_price not between", value1, value2, "sendPrice");
+            return (Criteria) this;
+        }
+
         public Criteria andUrlIsNull() {
             addCriterion("url is null");
             return (Criteria) this;

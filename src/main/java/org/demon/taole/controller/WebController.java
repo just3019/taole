@@ -1,6 +1,8 @@
 package org.demon.taole.controller;
 
+import org.demon.bean.PageData;
 import org.demon.taole.bean.CommodityQuery;
+import org.demon.taole.pojo.Commodity;
 import org.demon.taole.service.CommodityPriceService;
 import org.demon.taole.service.CommodityService;
 import org.demon.util.FunctionUtil;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * desc:
@@ -35,8 +38,15 @@ public class WebController {
         query.name = Optional.ofNullable(name).orElse(null);
         FunctionUtil.whenNonNullDo(query::setSize, size);
         query.orderBy = " updatetime desc ";
-        map.addAttribute("goods", commodityService.select(query));
+        PageData<Commodity> pageData = commodityService.select(query);
+        pageData.list = pageData.list.stream().peek(this::convertAsd).collect(Collectors.toList());
+        map.addAttribute("goods", pageData);
         return "product/goods";
+    }
+
+    private void convertAsd(Commodity commodity) {
+        commodity.setAsdUrl(commodity.getUrl().replaceAll("jd", "jdasd")
+                .replaceAll("suning", "suningasd"));
     }
 
     @GetMapping("/web/stat/{commodityId}")

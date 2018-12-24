@@ -41,7 +41,8 @@ public class CommodityPriceService {
         Date begin = DateUtil.beginOfDay(DateUtil.yesterday());
         Date end = DateUtil.endOfDay(DateUtil.yesterday());
         CommodityExample commodityExample = new CommodityExample();
-        Optional.ofNullable(commodityMapper.selectByExample(new CommodityExample())).orElseGet(ArrayList::new)
+        commodityExample.createCriteria().andUpdatetimeGreaterThanOrEqualTo(begin);
+        Optional.ofNullable(commodityMapper.selectByExample(commodityExample)).orElseGet(ArrayList::new)
                 .forEach(a -> {
                     List<Map<String, Object>> list = commodityPriceMapper.select(a.getId(), begin, end);
                     list.forEach(b -> {
