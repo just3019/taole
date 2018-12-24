@@ -14,11 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.mail.internet.MimeMessage;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -47,14 +48,18 @@ public class MailService {
     private AccountMapper accountMapper;
 
 
-    public void send(String subject, String content, Integer taskId) {
+    public void send(String subject, String content, Integer taskId, boolean html) {
         Task task = taskMapper.selectByPrimaryKey(taskId);
         Account account = accountMapper.selectByPrimaryKey(task.getUid());
-        send(subject, content, account.getEmail());
+        if (html) {
+            sendHtml(subject, content, account.getEmail());
+        } else {
+            send(subject, content, account.getEmail());
+        }
     }
 
 
-    public void send(String subject, String content, String to) {
+    private void send(String subject, String content, String to) {
         Email email = new Email();
         try {
             email.setToAddress(to);
@@ -74,6 +79,41 @@ public class MailService {
         } finally {
             emailMapper.insertSelective(email);
         }
+    }
+
+    private void sendHtml(String subject, String content, String to) {
+        Email email = new Email();
+        try {
+            email.setToAddress(to);
+            email.setSubject(subject);
+            email.setContent(content);
+            MimeMessage message = sender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setFrom(senderAdd);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(content, true);
+            sender.send(message);
+            log.info(StrUtil.format("\n发送html邮件成功：\n{}\n{}", subject, content));
+            email.setStatus("1");
+        } catch (Exception e) {
+            email.setStatus("0");
+            log.error(e);
+        } finally {
+            emailMapper.insertSelective(email);
+        }
+    }
+
+    String getEmailContent(String name, Integer price, String url) {
+        return "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><title>邮件</title></head><body><h1>"
+                + name
+                + "</h1><h2>当前价格：<span style=\"color: red\">"
+                + price
+                + "</span></h2><h2>商品地址：<a href=\""
+                + url
+                + "\">"
+                + url
+                + "</a></h2></body></html>";
     }
 
     /**
@@ -101,7 +141,12 @@ public class MailService {
 
     }
 
-    public void send(Email email) {
+    /**
+     * 轮询使用的发送邮件方法
+     *
+     * @param email {@link Email}
+     */
+    private void send(Email email) {
         Email update = new Email();
         update.setId(email.getId());
         try {

@@ -131,8 +131,8 @@ public class TaskService {
                 if (list.get(0).getLowPrice() > lowPrice) {
                     commodity.setLowPrice(lowPrice);
                     String subject = StrUtil.format("监控反馈");
-                    String content = list.get(0).getUrl();
-                    ExecutorPool.getInstance().execute(() -> mailService.send(subject, content, taskId));
+                    String content = mailService.getEmailContent(feedback.name, lowPrice, feedback.url);
+                    ExecutorPool.getInstance().execute(() -> mailService.send(subject, content, taskId, true));
                 }
                 commodityMapper.updateByPrimaryKeySelective(commodity);
             }

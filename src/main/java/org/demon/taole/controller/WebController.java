@@ -2,9 +2,11 @@ package org.demon.taole.controller;
 
 import org.demon.bean.PageData;
 import org.demon.taole.bean.CommodityQuery;
+import org.demon.taole.bean.EmailQuery;
 import org.demon.taole.pojo.Commodity;
 import org.demon.taole.service.CommodityPriceService;
 import org.demon.taole.service.CommodityService;
+import org.demon.taole.service.EmailService;
 import org.demon.util.FunctionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,8 @@ public class WebController {
     private CommodityService commodityService;
     @Autowired
     private CommodityPriceService commodityPriceService;
+    @Autowired
+    private EmailService emailService;
 
 
     @GetMapping("/web/goods/{taskId}/{page}")
@@ -54,5 +58,13 @@ public class WebController {
         map.addAttribute("goods", commodityService.select(commodityId));
         map.addAttribute("prices", commodityPriceService.select(commodityId));
         return "product/stat";
+    }
+
+    @GetMapping("/web/emails/{page}")
+    public String emails(ModelMap map, @PathVariable("page") Integer page) {
+        EmailQuery query = new EmailQuery();
+        query.setPage(Optional.ofNullable(page).orElse(1));
+        map.addAttribute("emails", emailService.select(query));
+        return "email/emails.html";
     }
 }
