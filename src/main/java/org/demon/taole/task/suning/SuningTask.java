@@ -1,7 +1,6 @@
 package org.demon.taole.task.suning;
 
 import lombok.extern.apachecommons.CommonsLog;
-import org.demon.pool.ExecutorPool;
 import org.demon.pool.SeleniumDownloader;
 import org.demon.taole.mapper.SuningTaskMapper;
 import org.demon.taole.pojo.SuningTaskExample;
@@ -30,14 +29,12 @@ public class SuningTask {
     @Autowired
     private ScanProductService scanProductService;
 
-//    @Scheduled(cron = "0/30 * * * * ?")
+    @Scheduled(cron = "0/30 * * * * ?")
     public void snUrlTask() {
         SuningTaskExample example = new SuningTaskExample();
         example.createCriteria().andStatusEqualTo("1");
         Optional.ofNullable(suningTaskMapper.selectByExample(example)).orElseGet(ArrayList::new)
-                .forEach(a -> ExecutorPool.getInstance().execute(() ->
-                        Spider.create(new SuningPageProcesser(a, scanProductService))
-                                .addUrl(a.getUrl())
-                                .setDownloader(new SeleniumDownloader()).run()));
+                .forEach(a -> Spider.create(new SuningPageProcesser(a, scanProductService))
+                        .addUrl(a.getUrl()).setDownloader(new SeleniumDownloader()).run());
     }
 }
