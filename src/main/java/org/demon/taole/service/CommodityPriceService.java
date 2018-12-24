@@ -1,10 +1,8 @@
 package org.demon.taole.service;
 
 import cn.hutool.core.date.DateUtil;
-import org.demon.bean.PageData;
 import org.demon.taole.mapper.CommodityMapper;
 import org.demon.taole.mapper.CommodityPriceMapper;
-import org.demon.taole.pojo.Commodity;
 import org.demon.taole.pojo.CommodityExample;
 import org.demon.taole.pojo.CommodityPrice;
 import org.demon.taole.pojo.CommodityPriceExample;
@@ -12,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +40,7 @@ public class CommodityPriceService {
     public void deleteTask() {
         Date begin = DateUtil.beginOfDay(DateUtil.yesterday());
         Date end = DateUtil.endOfDay(DateUtil.yesterday());
+        CommodityExample commodityExample = new CommodityExample();
         Optional.ofNullable(commodityMapper.selectByExample(new CommodityExample())).orElseGet(ArrayList::new)
                 .forEach(a -> {
                     List<Map<String, Object>> list = commodityPriceMapper.select(a.getId(), begin, end);
@@ -63,7 +66,6 @@ public class CommodityPriceService {
                         commodityPriceMapper.deleteByExample(deleteExample);
                     });
                 });
-
-
     }
+
 }

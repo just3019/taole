@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import lombok.extern.apachecommons.CommonsLog;
 import org.demon.TaoleApplication;
 import org.demon.taole.bean.TaskQuery;
+import org.demon.taole.mapper.CommodityMapper;
 import org.demon.taole.mapper.CommodityPriceMapper;
 import org.demon.taole.pojo.Task;
 import org.demon.util.JSONUtil;
@@ -12,7 +13,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 /**
  * desc:
@@ -33,6 +35,8 @@ public class TaskServiceTest {
     private CommodityPriceMapper commodityPriceMapper;
     @Autowired
     private CommodityPriceService commodityPriceService;
+    @Autowired
+    private CommodityMapper commodityMapper;
 
     @Test
     public void test() {
@@ -74,8 +78,37 @@ public class TaskServiceTest {
 
     @Test
     public void testSelect() {
-        commodityPriceService.deleteTask();
-//        System.out.println(commodityPriceMapper.select(434, DateUtil.beginOfDay(DateUtil.yesterday()), DateUtil.endOfDay(DateUtil.yesterday())));
+        Date begin = DateUtil.parse("2018-12-21 00:00:00");
+        Date end = DateUtil.parse("2018-12-21 23:59:59");
+        System.out.println(begin);
+        System.out.println(end);
+        //        CommodityExample commodityExample = new CommodityExample();
+        //        commodityExample.createCriteria().andUpdatetimeGreaterThanOrEqualTo(begin);
+        //        Optional.ofNullable(commodityMapper.selectByExample(commodityExample)).orElseGet(ArrayList::new)
+        //                .forEach(a -> {
+        //                    List<Map<String, Object>> list = commodityPriceMapper.select(a.getId(), begin, end);
+        //                    list.forEach(b -> {
+        //                        //1.获取这个价格和这个价格的数量
+        //                        Long count = (Long) b.get("count");
+        //                        Integer price = (Integer) b.get("price");
+        //                        //2.获取这个价格前一天的记录，留下第一个记录
+        //                        CommodityPriceExample commodityPriceExample = new CommodityPriceExample();
+        //                        commodityPriceExample.createCriteria().andCommodityIdEqualTo(a.getId())
+        //                                .andPriceEqualTo(price).andCreatetimeBetween(begin, end);
+        //                        commodityPriceExample.setLimit(Math.toIntExact(count - 1));
+        //                        commodityPriceExample.setOrderByClause(" id desc");
+        //                        List<Long> commodityPriceIds = Optional.ofNullable(commodityPriceMapper
+        //                                .selectByExample(commodityPriceExample)).orElseGet(ArrayList::new).stream()
+        //                                .map(CommodityPrice::getId).collect(Collectors.toList());
+        //                        if (commodityPriceIds.size() == 0) {
+        //                            return;
+        //                        }
+        //                        //3.根据id列表删除
+        //                        CommodityPriceExample deleteExample = new CommodityPriceExample();
+        //                        deleteExample.createCriteria().andIdIn(commodityPriceIds);
+        //                        commodityPriceMapper.deleteByExample(deleteExample);
+        //                    });
+        //                });
     }
 
 }
