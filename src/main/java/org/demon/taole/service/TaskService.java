@@ -129,6 +129,7 @@ public class TaskService {
                 commodity.setProductId(null);
                 commodity.setUrl(null);
                 commodity.setTaskId(null);
+                commodity.setSendPrice(null);
                 if (list.get(0).getSendPrice() > lowPrice) {
                     commodity.setLowPrice(lowPrice);
                     commodity.setSendPrice(lowPrice);
