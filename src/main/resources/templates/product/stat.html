@@ -48,9 +48,13 @@
     var prices = [[${prices}]];
     xdata = [];
     data = [];
+    tmp = 0;
     prices.forEach(function (value) {
-        xdata.push(new Date(value.createtime).format("yyyy-MM-dd hh:mm:ss"));
-        data.push(value.price);
+        if (tmp !== value.price) {
+            tmp = value.price;
+            xdata.push(new Date(value.createtime).format("yyyy-MM-dd hh:mm:ss"));
+            data.push(value.price);
+        }
     });
 
 
