@@ -43,7 +43,7 @@ public class WebController {
         query.setPage(Optional.ofNullable(page).orElse(1));
         query.name = Optional.ofNullable(name).orElse(null);
         FunctionUtil.whenNonNullDo(query::setSize, size);
-        query.orderBy = " updatetime desc ";
+        query.orderBy = " lowtime desc ";
         PageData<Commodity> pageData = commodityService.select(query);
         pageData.list = pageData.list.stream().peek(this::convertAsd).collect(Collectors.toList());
         map.addAttribute("goods", pageData);

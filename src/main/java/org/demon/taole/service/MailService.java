@@ -77,6 +77,7 @@ public class MailService {
             email.setStatus("0");
             log.error(e);
         } finally {
+            email.setRetry(1);
             emailMapper.insertSelective(email);
         }
     }
@@ -100,6 +101,7 @@ public class MailService {
             email.setStatus("0");
             log.error(e);
         } finally {
+            email.setRetry(1);
             emailMapper.insertSelective(email);
         }
     }
@@ -131,7 +133,7 @@ public class MailService {
     /**
      * 每个5分钟轮训一次邮件是否都发送成功
      */
-    @Scheduled(cron = "5 0/5 * * * ?")
+    @Scheduled(cron = "5 0/1 * * * ?")
     public void retry() {
         log.info("重发失败的邮件");
         EmailExample example = new EmailExample();
@@ -160,10 +162,9 @@ public class MailService {
             log.info(StrUtil.format("\n发送邮件成功：\n{}\n{}", email.getSubject(), email.getContent()));
             update.setStatus("1");
         } catch (Exception e) {
-            update.setStatus("0");
             log.error(e);
         } finally {
-            emailMapper.updateByPrimaryKeySelective(email);
+            emailMapper.updateByPrimaryKeySelective(update);
         }
     }
 

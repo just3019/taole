@@ -25,7 +25,7 @@
         <td th:text="${commodity.lowPrice}">low_price</td>
         <td th:text="${commodity.sendPrice}">send_price</td>
         <td th:text="${#dates.format(commodity.createtime,'yyyy-MM-dd HH:mm:ss')}">time</td>
-        <td th:text="${#dates.format(commodity.updatetime,'yyyy-MM-dd HH:mm:ss')}">time</td>
+        <td th:text="${#dates.format(commodity.lowtime,'yyyy-MM-dd HH:mm:ss')}">time</td>
         <td>
             <a th:href="${commodity.url}" target="_blank">下单</a> |
             <a th:href="${commodity.asdUrl}", target="_blank">asd</a> |

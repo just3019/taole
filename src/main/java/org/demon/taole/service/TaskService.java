@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -134,6 +135,7 @@ public class TaskService {
                     commodity.setLowPrice(lowPrice);
                     if (list.get(0).getSendPrice() > lowPrice) {
                         commodity.setSendPrice(lowPrice);
+                        commodity.setLowtime(new Date());
                         String subject = StrUtil.format("监控反馈");
                         String content = mailService.getEmailContent(feedback.name, lowPrice, feedback.url);
                         ExecutorPool.getInstance().execute(() -> mailService.send(subject, content, taskId, true));

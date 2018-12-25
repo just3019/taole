@@ -23,6 +23,8 @@ public class Commodity {
 
     private Date updatetime;
 
+    private Date lowtime;
+
     private String asdUrl;
 
     public Integer getId() {
@@ -103,6 +105,14 @@ public class Commodity {
 
     public void setUpdatetime(Date updatetime) {
         this.updatetime = updatetime;
+    }
+
+    public Date getLowtime() {
+        return lowtime;
+    }
+
+    public void setLowtime(Date lowtime) {
+        this.lowtime = lowtime;
     }
 
     public String getAsdUrl() {

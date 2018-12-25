@@ -754,6 +754,66 @@ public class CommodityExample {
             addCriterion("updatetime not between", value1, value2, "updatetime");
             return (Criteria) this;
         }
+
+        public Criteria andLowtimeIsNull() {
+            addCriterion("lowtime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowtimeIsNotNull() {
+            addCriterion("lowtime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowtimeEqualTo(Date value) {
+            addCriterion("lowtime =", value, "lowtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowtimeNotEqualTo(Date value) {
+            addCriterion("lowtime <>", value, "lowtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowtimeGreaterThan(Date value) {
+            addCriterion("lowtime >", value, "lowtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowtimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("lowtime >=", value, "lowtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowtimeLessThan(Date value) {
+            addCriterion("lowtime <", value, "lowtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowtimeLessThanOrEqualTo(Date value) {
+            addCriterion("lowtime <=", value, "lowtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowtimeIn(List<Date> values) {
+            addCriterion("lowtime in", values, "lowtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowtimeNotIn(List<Date> values) {
+            addCriterion("lowtime not in", values, "lowtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowtimeBetween(Date value1, Date value2) {
+            addCriterion("lowtime between", value1, value2, "lowtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLowtimeNotBetween(Date value1, Date value2) {
+            addCriterion("lowtime not between", value1, value2, "lowtime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
