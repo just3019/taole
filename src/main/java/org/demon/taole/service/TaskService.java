@@ -137,7 +137,7 @@ public class TaskService {
                         commodity.setSendPrice(lowPrice);
                         commodity.setLowtime(new Date());
                         String subject = StrUtil.format("监控反馈");
-                        String content = mailService.getEmailContent(feedback.name, lowPrice, feedback.url);
+                        String content = mailService.getEmailContent(feedback.name, lowPrice, feedback.url, commodityId);
                         ExecutorPool.getInstance().execute(() -> mailService.send(subject, content, taskId, true));
                     }
                 }
