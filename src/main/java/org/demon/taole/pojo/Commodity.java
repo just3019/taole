@@ -19,6 +19,8 @@ public class Commodity {
 
     private String url;
 
+    private String status;
+
     private Date createtime;
 
     private Date updatetime;
@@ -89,6 +91,14 @@ public class Commodity {
 
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 
     public Date getCreatetime() {

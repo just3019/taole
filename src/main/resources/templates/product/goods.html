@@ -36,7 +36,8 @@
         <td>
             <a th:href="${commodity.url}" target="_blank">下单</a> |
             <a th:href="${commodity.asdUrl}" target="_blank">asd</a> |
-            <a th:href="'/web/stat/'+${commodity.id}" target="_blank">波动</a>
+            <a th:href="'/web/stat/'+${commodity.id}" target="_blank">波动</a> |
+            <a href="javascript:void(0)" th:onclick="'noSelect('+${commodity.id}+')'">no</a>
         </td>
     </tr>
 </table>
@@ -65,7 +66,20 @@
             li.appendChild(a);
             pagetool.appendChild(li);
         }
+    }
 
+    function noSelect(commodityId) {
+        var ajax = new XMLHttpRequest();
+        ajax.open('get', '/web/goods/noSelect/' + commodityId);
+        ajax.send();
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState === 4 && ajax.status === 200) {
+                //步骤五 如果能够进到这个判断 说明 数据 完美的回来了,并且请求的页面是存在的
+                console.log(ajax.responseText);//输入相应的内容
+                alert("修改成功！");
+                window.location.reload();
+            }
+        }
     }
 </script>
 </body>

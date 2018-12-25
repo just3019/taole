@@ -65,6 +65,12 @@ public class WebController {
         commodityService.update(commodityId, sendPrice);
     }
 
+    @GetMapping("/web/goods/noSelect/{commodityId}")
+    @ResponseBody
+    public void noSelect(@PathVariable("commodityId") Integer commodityId) {
+        commodityService.noSelect(commodityId);
+    }
+
     @GetMapping("/web/stat/{commodityId}")
     public String stat(ModelMap map, @PathVariable("commodityId") Integer commodityId) {
         map.addAttribute("goods", commodityService.select(commodityId));
