@@ -53,8 +53,6 @@ public class WebController {
     private void convertAsd(Commodity commodity) {
         commodity.setAsdUrl(commodity.getUrl().replaceFirst("jd", "jdasd")
                 .replaceFirst("suning", "suningasd"));
-        System.out.println(commodity.getUrl());
-        System.out.println(commodity.getAsdUrl());
     }
 
     @GetMapping("/web/goods/sendPrice/{commodityId}/{sendPrice}")
