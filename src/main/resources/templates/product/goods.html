@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <title>商品列表</title>
 </head>
+<style>
+    li {
+        float: left;
+        list-style: none;
+        padding-left: 10px;
+    }
+</style>
 <body>
 <h1 th:text="'总共'+${goods.count}+'条'"></h1>
 
@@ -28,10 +35,38 @@
         <td th:text="${#dates.format(commodity.lowtime,'yyyy-MM-dd HH:mm:ss')}">time</td>
         <td>
             <a th:href="${commodity.url}" target="_blank">下单</a> |
-            <a th:href="${commodity.asdUrl}", target="_blank">asd</a> |
+            <a th:href="${commodity.asdUrl}" target="_blank">asd</a> |
             <a th:href="'/web/stat/'+${commodity.id}" target="_blank">波动</a>
         </td>
     </tr>
 </table>
+
+<ul id="pagetool">
+</ul>
+
+<script th:inline="javascript" type="text/javascript">
+    var total = [[${goods.count}]];
+    var size = [[${size}]];
+    var name = [[${name}]];
+    var offset = [[${offset}]];
+    var page = Math.ceil(total / size);
+    console.info(page);
+    var pagetool = document.getElementById("pagetool");
+    for (var i = 1; i <= page; i++) {
+        if (i === 1 || Math.abs(i - offset) <= 5) {
+            url = "/web/goods/0/" + i + "?name=" + name + "&size=" + size;
+            var li = document.createElement("li");
+            var a = document.createElement("a");
+            a.setAttribute("href", url);
+            a.innerText = i;
+            if (i === 1) {
+                a.innerText = "首页";
+            }
+            li.appendChild(a);
+            pagetool.appendChild(li);
+        }
+
+    }
+</script>
 </body>
 </html>

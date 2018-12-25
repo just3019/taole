@@ -47,6 +47,9 @@ public class WebController {
         PageData<Commodity> pageData = commodityService.select(query);
         pageData.list = pageData.list.stream().peek(this::convertAsd).collect(Collectors.toList());
         map.addAttribute("goods", pageData);
+        map.addAttribute("size", Optional.ofNullable(size).orElse(query.getSize()));
+        map.addAttribute("name", Optional.ofNullable(name).orElse(""));
+        map.addAttribute("offset", page);
         return "product/goods";
     }
 
