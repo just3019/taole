@@ -36,26 +36,29 @@ public class WebController {
     private EmailService emailService;
 
 
-    @GetMapping("/web/goods/{taskId}/{page}")
-    public String commodities(ModelMap map, @PathVariable("taskId") Integer taskId, @PathVariable("page") Integer page, String name, Integer size) {
+    @GetMapping("/web/goods/{page}")
+    public String commodities(ModelMap map, @PathVariable("page") Integer page, Integer taskId, String name,
+                              Integer size) {
         CommodityQuery query = new CommodityQuery();
         query.taskId = Optional.ofNullable(taskId).orElse(0);
         query.setPage(Optional.ofNullable(page).orElse(1));
         query.name = Optional.ofNullable(name).orElse(null);
         FunctionUtil.whenNonNullDo(query::setSize, size);
-        query.orderBy = " lowtime desc ";
+        query.orderBy = "price asc , lowtime desc ";
         PageData<Commodity> pageData = commodityService.select(query);
         pageData.list = pageData.list.stream().peek(this::convertAsd).collect(Collectors.toList());
         map.addAttribute("goods", pageData);
         map.addAttribute("size", Optional.ofNullable(size).orElse(query.getSize()));
         map.addAttribute("name", Optional.ofNullable(name).orElse(""));
+        map.addAttribute("taskId", query.taskId);
         map.addAttribute("offset", page);
         return "product/goods";
     }
 
     private void convertAsd(Commodity commodity) {
         commodity.setAsdUrl(commodity.getUrl().replaceFirst("jd", "jdasd")
-                .replaceFirst("suning", "suningasd"));
+                .replaceFirst("suning", "suningasd")
+                .replaceFirst("kaola", "kaolaasd"));
     }
 
     @GetMapping("/web/goods/sendPrice/{commodityId}/{sendPrice}")

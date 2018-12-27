@@ -78,10 +78,11 @@ public class TaskServiceTest {
 
     @Test
     public void testSelect() {
-        Date begin = DateUtil.parse("2018-12-21 00:00:00");
-        Date end = DateUtil.parse("2018-12-21 23:59:59");
-        System.out.println(begin);
-        System.out.println(end);
+        commodityPriceService.deleteTask();
+//        Date begin = DateUtil.parse("2018-12-21 00:00:00");
+//        Date end = DateUtil.parse("2018-12-21 23:59:59");
+//        System.out.println(begin);
+//        System.out.println(end);
         //        CommodityExample commodityExample = new CommodityExample();
         //        commodityExample.createCriteria().andUpdatetimeGreaterThanOrEqualTo(begin);
         //        Optional.ofNullable(commodityMapper.selectByExample(commodityExample)).orElseGet(ArrayList::new)

@@ -36,13 +36,11 @@ public class CommodityPriceService {
      * 删除前一天价格记录，
      * 剩下当天的不同价格
      */
-    @Scheduled(cron = "0 0 0/12 * * ?")
+    @Scheduled(cron = "0 0 0/4 * * ?")
     public void deleteTask() {
-        Date begin = DateUtil.beginOfDay(DateUtil.yesterday());
-        Date end = DateUtil.endOfDay(DateUtil.yesterday());
-        CommodityExample commodityExample = new CommodityExample();
-        commodityExample.createCriteria().andUpdatetimeGreaterThanOrEqualTo(begin);
-        Optional.ofNullable(commodityMapper.selectByExample(commodityExample)).orElseGet(ArrayList::new)
+        Date begin = DateUtil.offsetHour(new Date(), -4);
+        Date end = DateUtil.offsetHour(new Date(), 0);
+        Optional.ofNullable(commodityMapper.selectByExample(new CommodityExample())).orElseGet(ArrayList::new)
                 .forEach(a -> {
                     List<Map<String, Object>> list = commodityPriceMapper.select(a.getId(), begin, end);
                     list.forEach(b -> {

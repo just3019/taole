@@ -14,6 +14,9 @@
 <body>
 <h1 th:text="'总共'+${goods.count}+'条'"></h1>
 
+<input id="key" type="text"/>
+<input onclick="keySearch()" type="button" value="搜索"/>
+
 <table border="1">
     <tr>
         <td width="30">序号</td>
@@ -50,12 +53,13 @@
     var size = [[${size}]];
     var name = [[${name}]];
     var offset = [[${offset}]];
+    var taskId = [[${taskId}]];
     var page = Math.ceil(total / size);
     console.info(page);
     var pagetool = document.getElementById("pagetool");
     for (var i = 1; i <= page; i++) {
         if (i === 1 || Math.abs(i - offset) <= 5) {
-            url = "/web/goods/0/" + i + "?name=" + name + "&size=" + size;
+            url = "/web/goods/" + i + "?name=" + name + "&size=" + size + "&taskId=" + taskId;
             var li = document.createElement("li");
             var a = document.createElement("a");
             a.setAttribute("href", url);
@@ -80,6 +84,11 @@
                 window.location.reload();
             }
         }
+    }
+
+    function keySearch() {
+        var key = document.getElementById("key").value;
+        window.location.href = "/web/goods/1?name=" + key + "&size=" + size + "&taskId=" + taskId;
     }
 </script>
 </body>
