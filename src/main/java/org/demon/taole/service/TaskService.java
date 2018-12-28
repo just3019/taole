@@ -104,6 +104,7 @@ public class TaskService {
         int taskId = Optional.ofNullable(feedback.taskId).orElse(0);
         int lowPrice = NumberUtil.parseInt(feedback.lowPrice);
         int price = NumberUtil.parseInt(feedback.price);
+        int originalPrice = NumberUtil.parseInt(feedback.originalPrice);
         commodity.setTaskId(taskId);
         commodity.setName(feedback.name);
         commodity.setLowPrice(lowPrice);
@@ -111,6 +112,8 @@ public class TaskService {
         commodity.setProductId(feedback.productId);
         commodity.setUrl(feedback.url);
         commodity.setSendPrice(lowPrice);
+        commodity.setOriginalPrice(originalPrice);
+        commodity.setPercent((float) NumberUtil.div((float) price, (float) originalPrice, 2));
         CommodityExample example = new CommodityExample();
         example.createCriteria().andProductIdEqualTo(feedback.productId).andTaskIdEqualTo(taskId);
         List<Commodity> list = Optional.ofNullable(commodityMapper.selectByExample(example)).orElseGet(ArrayList::new);
@@ -131,6 +134,8 @@ public class TaskService {
                 commodity.setUrl(null);
                 commodity.setTaskId(null);
                 commodity.setSendPrice(null);
+                commodity.setOriginalPrice(null);
+                commodity.setPercent((float) NumberUtil.div((float) price, (float) list.get(0).getOriginalPrice(), 2));
                 if (list.get(0).getLowPrice() > lowPrice){
                     commodity.setLowPrice(lowPrice);
                     if (list.get(0).getSendPrice() > lowPrice) {

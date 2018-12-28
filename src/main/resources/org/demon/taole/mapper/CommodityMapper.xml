@@ -9,6 +9,8 @@
     <result column="price" jdbcType="INTEGER" property="price" />
     <result column="low_price" jdbcType="INTEGER" property="lowPrice" />
     <result column="send_price" jdbcType="INTEGER" property="sendPrice" />
+    <result column="original_price" jdbcType="INTEGER" property="originalPrice" />
+    <result column="percent" jdbcType="REAL" property="percent" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
@@ -74,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, task_id, product_id, name, price, low_price, send_price, url, status, createtime, 
-    updatetime, lowtime
+    id, task_id, product_id, name, price, low_price, send_price, original_price, percent, 
+    url, status, createtime, updatetime, lowtime
   </sql>
   <select id="selectByExample" parameterType="org.demon.taole.pojo.CommodityExample" resultMap="BaseResultMap">
     select
@@ -119,12 +121,14 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.demon.taole.pojo.Commodity" useGeneratedKeys="true">
     insert into commodity (task_id, product_id, name, 
       price, low_price, send_price, 
-      url, status, createtime, 
-      updatetime, lowtime)
+      original_price, percent, url, 
+      status, createtime, updatetime, 
+      lowtime)
     values (#{taskId,jdbcType=INTEGER}, #{productId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{price,jdbcType=INTEGER}, #{lowPrice,jdbcType=INTEGER}, #{sendPrice,jdbcType=INTEGER}, 
-      #{url,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{updatetime,jdbcType=TIMESTAMP}, #{lowtime,jdbcType=TIMESTAMP})
+      #{originalPrice,jdbcType=INTEGER}, #{percent,jdbcType=REAL}, #{url,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{lowtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.demon.taole.pojo.Commodity" useGeneratedKeys="true">
     insert into commodity
@@ -146,6 +150,12 @@
       </if>
       <if test="sendPrice != null">
         send_price,
+      </if>
+      <if test="originalPrice != null">
+        original_price,
+      </if>
+      <if test="percent != null">
+        percent,
       </if>
       <if test="url != null">
         url,
@@ -181,6 +191,12 @@
       </if>
       <if test="sendPrice != null">
         #{sendPrice,jdbcType=INTEGER},
+      </if>
+      <if test="originalPrice != null">
+        #{originalPrice,jdbcType=INTEGER},
+      </if>
+      <if test="percent != null">
+        #{percent,jdbcType=REAL},
       </if>
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
@@ -229,6 +245,12 @@
       <if test="record.sendPrice != null">
         send_price = #{record.sendPrice,jdbcType=INTEGER},
       </if>
+      <if test="record.originalPrice != null">
+        original_price = #{record.originalPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.percent != null">
+        percent = #{record.percent,jdbcType=REAL},
+      </if>
       <if test="record.url != null">
         url = #{record.url,jdbcType=VARCHAR},
       </if>
@@ -258,6 +280,8 @@
       price = #{record.price,jdbcType=INTEGER},
       low_price = #{record.lowPrice,jdbcType=INTEGER},
       send_price = #{record.sendPrice,jdbcType=INTEGER},
+      original_price = #{record.originalPrice,jdbcType=INTEGER},
+      percent = #{record.percent,jdbcType=REAL},
       url = #{record.url,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=VARCHAR},
       createtime = #{record.createtime,jdbcType=TIMESTAMP},
@@ -288,6 +312,12 @@
       <if test="sendPrice != null">
         send_price = #{sendPrice,jdbcType=INTEGER},
       </if>
+      <if test="originalPrice != null">
+        original_price = #{originalPrice,jdbcType=INTEGER},
+      </if>
+      <if test="percent != null">
+        percent = #{percent,jdbcType=REAL},
+      </if>
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
       </if>
@@ -314,6 +344,8 @@
       price = #{price,jdbcType=INTEGER},
       low_price = #{lowPrice,jdbcType=INTEGER},
       send_price = #{sendPrice,jdbcType=INTEGER},
+      original_price = #{originalPrice,jdbcType=INTEGER},
+      percent = #{percent,jdbcType=REAL},
       url = #{url,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},

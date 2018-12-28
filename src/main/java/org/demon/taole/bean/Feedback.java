@@ -13,6 +13,7 @@ public class Feedback {
     public String url;
     public String lowPrice;
     public String price;
+    public String originalPrice;
     public String name;
     public String productId;
     public List<FeedbackPrice> feedbackPrices;

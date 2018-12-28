@@ -17,6 +17,10 @@ public class Commodity {
 
     private Integer sendPrice;
 
+    private Integer originalPrice;
+
+    private Float percent;
+
     private String url;
 
     private String status;
@@ -83,6 +87,22 @@ public class Commodity {
 
     public void setSendPrice(Integer sendPrice) {
         this.sendPrice = sendPrice;
+    }
+
+    public Integer getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(Integer originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public Float getPercent() {
+        return percent;
+    }
+
+    public void setPercent(Float percent) {
+        this.percent = percent;
     }
 
     public String getUrl() {

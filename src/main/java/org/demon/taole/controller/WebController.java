@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -35,16 +37,26 @@ public class WebController {
     @Autowired
     private EmailService emailService;
 
+    //排序方式
+    private static Map<Integer, String> MAP = new HashMap<>();
+
+    static {
+        MAP.put(1, " price asc ");
+        MAP.put(2, " percent asc ");
+        MAP.put(3, " lowtime desc");
+        MAP.put(4, " updatetime desc ");
+    }
+
 
     @GetMapping("/web/goods/{page}")
     public String commodities(ModelMap map, @PathVariable("page") Integer page, Integer taskId, String name,
-                              Integer size) {
+                              Integer size, Integer orderBy) {
         CommodityQuery query = new CommodityQuery();
         query.taskId = Optional.ofNullable(taskId).orElse(0);
         query.setPage(Optional.ofNullable(page).orElse(1));
         query.name = Optional.ofNullable(name).orElse(null);
         FunctionUtil.whenNonNullDo(query::setSize, size);
-        query.orderBy = "price asc , lowtime desc ";
+        query.orderBy = MAP.get(Optional.ofNullable(orderBy).orElse(4));
         PageData<Commodity> pageData = commodityService.select(query);
         pageData.list = pageData.list.stream().peek(this::convertAsd).collect(Collectors.toList());
         map.addAttribute("goods", pageData);
@@ -52,6 +64,7 @@ public class WebController {
         map.addAttribute("name", Optional.ofNullable(name).orElse(""));
         map.addAttribute("taskId", query.taskId);
         map.addAttribute("offset", page);
+        map.addAttribute("orderBy", Optional.ofNullable(orderBy).orElse(4));
         return "product/goods";
     }
 

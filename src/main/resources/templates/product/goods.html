@@ -14,8 +14,15 @@
 <body>
 <h1 th:text="'总共'+${goods.count}+'条'"></h1>
 
-<input id="key" type="text"/>
+<input th:text="${name}" id="key" type="text"/>
 <input onclick="keySearch()" type="button" value="搜索"/>
+
+<div>
+    <input value="价格降序" type="button" onclick="searchOrderBy(1)"/>
+    <input value="折扣升序" type="button" onclick="searchOrderBy(2)"/>
+    <input value="最低价更新" type="button" onclick="searchOrderBy(3)"/>
+    <input value="清理排序" type="button" onclick="searchOrderBy(4)"/>
+</div>
 
 <table border="1">
     <tr>
@@ -54,12 +61,13 @@
     var name = [[${name}]];
     var offset = [[${offset}]];
     var taskId = [[${taskId}]];
+    var orderBy = [[${orderBy}]];
     var page = Math.ceil(total / size);
     console.info(page);
     var pagetool = document.getElementById("pagetool");
     for (var i = 1; i <= page; i++) {
         if (i === 1 || Math.abs(i - offset) <= 5) {
-            url = "/web/goods/" + i + "?name=" + name + "&size=" + size + "&taskId=" + taskId;
+            url = getUrl(i, name, size, taskId, orderBy);
             var li = document.createElement("li");
             var a = document.createElement("a");
             a.setAttribute("href", url);
@@ -88,8 +96,17 @@
 
     function keySearch() {
         var key = document.getElementById("key").value;
-        window.location.href = "/web/goods/1?name=" + key + "&size=" + size + "&taskId=" + taskId;
+        window.location.href = getUrl(1, key, size, taskId, orderBy);
     }
+
+    function searchOrderBy(by) {
+        window.location.href = getUrl(1, name, size, taskId, by);
+    }
+
+    function getUrl(i, name, size, taskId, orderBy) {
+        return "/web/goods/" + i + "?name=" + name + "&size=" + size + "&taskId=" + taskId + "&orderBy=" + orderBy;
+    }
+
 </script>
 </body>
 </html>
