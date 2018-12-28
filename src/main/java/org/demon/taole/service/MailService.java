@@ -107,7 +107,7 @@ public class MailService {
     }
 
     String getEmailContent(String name, Integer price, String url, Integer commodityId) {
-        return "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><title>邮件</title></head><body><h1>" + name + "</h1><h2>当前价格：<span style=\"color: red\">" + price + "</span></h2><h2><a href=\"" + url + "\">商品地址</a></h2></body><h2><a href=\"http://taole.luckygrra.com/web/stat/" + commodityId + "\">波动</a></h2></body></html>";
+        return "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><title>邮件</title></head><body><h1>" + name + "</h1><h2>当前价格：<span style=\"color: red\">" + price + "</span></h2><h2><a target=\"_blank\" href=\"" + url + "\">商品地址</a></h2></body><h2><a target=\"_blank\" href=\"http://taole.luckygrra.com/web/stat/" + commodityId + "\">波动</a></h2></body></html>";
     }
 
     /**

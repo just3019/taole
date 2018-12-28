@@ -104,7 +104,7 @@ public class TaskService {
         int taskId = Optional.ofNullable(feedback.taskId).orElse(0);
         int lowPrice = NumberUtil.parseInt(feedback.lowPrice);
         int price = NumberUtil.parseInt(feedback.price);
-        int originalPrice = NumberUtil.parseInt(feedback.originalPrice);
+        int originalPrice = NumberUtil.parseInt(feedback.originalPrice) == 0 ? price : NumberUtil.parseInt(feedback.originalPrice);
         commodity.setTaskId(taskId);
         commodity.setName(feedback.name);
         commodity.setLowPrice(lowPrice);
@@ -136,7 +136,7 @@ public class TaskService {
                 commodity.setSendPrice(null);
                 commodity.setOriginalPrice(null);
                 commodity.setPercent((float) NumberUtil.div((float) price, (float) list.get(0).getOriginalPrice(), 2));
-                if (list.get(0).getLowPrice() > lowPrice){
+                if (list.get(0).getLowPrice() > lowPrice) {
                     commodity.setLowPrice(lowPrice);
                     if (list.get(0).getSendPrice() > lowPrice) {
                         commodity.setSendPrice(lowPrice);
