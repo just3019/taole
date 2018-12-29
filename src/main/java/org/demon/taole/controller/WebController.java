@@ -3,6 +3,7 @@ package org.demon.taole.controller;
 import org.demon.bean.PageData;
 import org.demon.exception.BusinessException;
 import org.demon.taole.bean.CommodityQuery;
+import org.demon.taole.bean.Constants;
 import org.demon.taole.bean.EmailQuery;
 import org.demon.taole.pojo.Commodity;
 import org.demon.taole.service.CommodityPriceService;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -37,17 +36,6 @@ public class WebController {
     @Autowired
     private EmailService emailService;
 
-    //排序方式
-    private static Map<Integer, String> MAP = new HashMap<>();
-
-    static {
-        MAP.put(1, " price asc ");
-        MAP.put(2, " percent asc ");
-        MAP.put(3, " lowtime desc");
-        MAP.put(4, " updatetime desc ");
-    }
-
-
     @GetMapping("/web/goods/{page}")
     public String commodities(ModelMap map, @PathVariable("page") Integer page, Integer taskId, String name,
                               Integer size, Integer orderBy) {
@@ -56,7 +44,7 @@ public class WebController {
         query.setPage(Optional.ofNullable(page).orElse(1));
         query.name = Optional.ofNullable(name).orElse(null);
         FunctionUtil.whenNonNullDo(query::setSize, size);
-        query.orderBy = MAP.get(Optional.ofNullable(orderBy).orElse(4));
+        query.orderBy = Constants.MAP.get(Optional.ofNullable(orderBy).orElse(4));
         PageData<Commodity> pageData = commodityService.select(query);
         pageData.list = pageData.list.stream().peek(this::convertAsd).collect(Collectors.toList());
         map.addAttribute("goods", pageData);
@@ -69,7 +57,9 @@ public class WebController {
     }
 
     private void convertAsd(Commodity commodity) {
-        commodity.setAsdUrl(commodity.getUrl().replaceFirst("jd", "jdasd")
+        commodity.setAsdUrl(commodity.getUrl()
+                .replaceFirst("amazon", "amazonasd")
+                .replaceFirst("jd", "jdasd")
                 .replaceFirst("suning", "suningasd")
                 .replaceFirst("kaola", "kaolaasd"));
     }
