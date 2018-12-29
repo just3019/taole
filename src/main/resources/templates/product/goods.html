@@ -14,7 +14,7 @@
 <body>
 <h1 th:text="'总共'+${goods.count}+'条'"></h1>
 
-<input th:text="${name}" id="key" type="text"/>
+<input th:value="${name}" id="key" type="text"/>
 <input onclick="keySearch()" type="button" value="搜索"/>
 
 <div>
