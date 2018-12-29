@@ -66,7 +66,11 @@ public class MailService {
             email.setSubject(subject);
             email.setContent(content);
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(to);
+            if (!StrUtil.equals(to, recieverAdd)) {
+                message.setTo(to, recieverAdd);
+            } else {
+                message.setTo(to);
+            }
             message.setFrom(senderAdd);
             message.setSubject(subject);
             message.setText(content);
@@ -91,7 +95,11 @@ public class MailService {
             MimeMessage message = sender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom(senderAdd);
-            helper.setTo(to);
+            if (!StrUtil.equals(to, recieverAdd)) {
+                helper.setTo(new String[]{to, recieverAdd});
+            } else {
+                helper.setTo(to);
+            }
             helper.setSubject(subject);
             helper.setText(content, true);
             sender.send(message);

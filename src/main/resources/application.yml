@@ -21,7 +21,7 @@ spring:
     username: vampire3019@aliyun.com
     password: SongLinhao3019!
     sender: vampire3019@aliyun.com
-    reciever: linhao.song@welian.com
+    reciever: 455674848@qq.com
     protocol: smtp
     properties:
       mail:

@@ -27,6 +27,6 @@ public class MailServiceTest {
 
     @Test
     public void test() {
-        mailService.send("监控反馈test", mailService.getEmailContent("华为(HUAWEI)华为 P20 6GB +64GB (极光色) 全网通版 移动联通电信4G手机 华为手机", 2979, "https://product.suning.com/0070142956/10554029578.html", 303), 0, true);
+        mailService.send("监控反馈test1", mailService.getEmailContent("华为(HUAWEI)华为 P20 6GB +64GB (极光色) 全网通版 移动联通电信4G手机 华为手机", 2979, "https://product.suning.com/0070142956/10554029578.html", 303), 0, true);
     }
 }
