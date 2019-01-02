@@ -24,9 +24,18 @@
     <input value="清理排序" type="button" onclick="searchOrderBy(4)"/>
 </div>
 
+<div>
+    <input value="京东" type="button" onclick="serchByPlatform(0)"/>
+    <input value="苏宁" type="button" onclick="serchByPlatform(1)"/>
+    <input value="国美" type="button" onclick="serchByPlatform(2)"/>
+    <input value="考拉" type="button" onclick="serchByPlatform(3)"/>
+    <input value="亚马逊" type="button" onclick="serchByPlatform(4)"/>
+</div>
+
 <table border="1">
     <tr>
         <td width="30">序号</td>
+        <td width="30">来源</td>
         <td width="200">商品名</td>
         <td width="50">价格</td>
         <td width="50">折扣</td>
@@ -37,6 +46,9 @@
     </tr>
     <tr th:each="commodity,stat : ${goods.list}">
         <td th:text="${stat.count}">1</td>
+        <td>
+            <img th:src="'http://res.luckygrra.com/resources/'+${commodity.platform}+'.ico'" width="28" height="28">
+        </td>
         <td th:text="${#strings.trim(commodity.name)}">name</td>
         <td th:text="${commodity.price}">price</td>
         <td th:text="${commodity.percent}">low_price</td>
@@ -62,12 +74,13 @@
     var offset = [[${offset}]];
     var taskId = [[${taskId}]];
     var orderBy = [[${orderBy}]];
+    var platform = [[${platform}]];
     var page = Math.ceil(total / size);
     console.info(page);
     var pagetool = document.getElementById("pagetool");
     for (var i = 1; i <= page; i++) {
         if (i === 1 || Math.abs(i - offset) <= 5) {
-            url = getUrl(i, name, size, taskId, orderBy);
+            url = getUrl(i, name, size, taskId, orderBy, "");
             var li = document.createElement("li");
             var a = document.createElement("a");
             a.setAttribute("href", url);
@@ -96,15 +109,19 @@
 
     function keySearch() {
         var key = document.getElementById("key").value;
-        window.location.href = getUrl(1, key, size, taskId, orderBy);
+        window.location.href = getUrl(1, key, size, taskId, orderBy, "");
     }
 
     function searchOrderBy(by) {
-        window.location.href = getUrl(1, name, size, taskId, by);
+        window.location.href = getUrl(1, name, size, taskId, by, "");
     }
 
-    function getUrl(i, name, size, taskId, orderBy) {
-        return "/web/goods/" + i + "?name=" + name + "&size=" + size + "&taskId=" + taskId + "&orderBy=" + orderBy;
+    function serchByPlatform(plt) {
+        window.location.href = getUrl(1, name, size, taskId, orderBy, plt);
+    }
+
+    function getUrl(i, name, size, taskId, orderBy, platform) {
+        return "/web/goods/" + i + "?name=" + name + "&size=" + size + "&taskId=" + taskId + "&orderBy=" + orderBy + "&platform=" + platform;
     }
 
 </script>

@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="org.demon.taole.pojo.Commodity">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="task_id" jdbcType="INTEGER" property="taskId" />
+    <result column="platform" jdbcType="VARCHAR" property="platform" />
     <result column="product_id" jdbcType="VARCHAR" property="productId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="price" jdbcType="INTEGER" property="price" />
@@ -76,8 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, task_id, product_id, name, price, low_price, send_price, original_price, percent, 
-    url, status, createtime, updatetime, lowtime
+    id, task_id, platform, product_id, name, price, low_price, send_price, original_price, 
+    percent, url, status, createtime, updatetime, lowtime
   </sql>
   <select id="selectByExample" parameterType="org.demon.taole.pojo.CommodityExample" resultMap="BaseResultMap">
     select
@@ -119,22 +120,25 @@
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.demon.taole.pojo.Commodity" useGeneratedKeys="true">
-    insert into commodity (task_id, product_id, name, 
-      price, low_price, send_price, 
-      original_price, percent, url, 
-      status, createtime, updatetime, 
-      lowtime)
-    values (#{taskId,jdbcType=INTEGER}, #{productId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{price,jdbcType=INTEGER}, #{lowPrice,jdbcType=INTEGER}, #{sendPrice,jdbcType=INTEGER}, 
-      #{originalPrice,jdbcType=INTEGER}, #{percent,jdbcType=REAL}, #{url,jdbcType=VARCHAR}, 
-      #{status,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
-      #{lowtime,jdbcType=TIMESTAMP})
+    insert into commodity (task_id, platform, product_id, 
+      name, price, low_price, 
+      send_price, original_price, percent, 
+      url, status, createtime, 
+      updatetime, lowtime)
+    values (#{taskId,jdbcType=INTEGER}, #{platform,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{lowPrice,jdbcType=INTEGER}, 
+      #{sendPrice,jdbcType=INTEGER}, #{originalPrice,jdbcType=INTEGER}, #{percent,jdbcType=REAL}, 
+      #{url,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{lowtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.demon.taole.pojo.Commodity" useGeneratedKeys="true">
     insert into commodity
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="taskId != null">
         task_id,
+      </if>
+      <if test="platform != null">
+        platform,
       </if>
       <if test="productId != null">
         product_id,
@@ -176,6 +180,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="taskId != null">
         #{taskId,jdbcType=INTEGER},
+      </if>
+      <if test="platform != null">
+        #{platform,jdbcType=VARCHAR},
       </if>
       <if test="productId != null">
         #{productId,jdbcType=VARCHAR},
@@ -230,6 +237,9 @@
       <if test="record.taskId != null">
         task_id = #{record.taskId,jdbcType=INTEGER},
       </if>
+      <if test="record.platform != null">
+        platform = #{record.platform,jdbcType=VARCHAR},
+      </if>
       <if test="record.productId != null">
         product_id = #{record.productId,jdbcType=VARCHAR},
       </if>
@@ -275,6 +285,7 @@
     update commodity
     set id = #{record.id,jdbcType=INTEGER},
       task_id = #{record.taskId,jdbcType=INTEGER},
+      platform = #{record.platform,jdbcType=VARCHAR},
       product_id = #{record.productId,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       price = #{record.price,jdbcType=INTEGER},
@@ -296,6 +307,9 @@
     <set>
       <if test="taskId != null">
         task_id = #{taskId,jdbcType=INTEGER},
+      </if>
+      <if test="platform != null">
+        platform = #{platform,jdbcType=VARCHAR},
       </if>
       <if test="productId != null">
         product_id = #{productId,jdbcType=VARCHAR},
@@ -339,6 +353,7 @@
   <update id="updateByPrimaryKey" parameterType="org.demon.taole.pojo.Commodity">
     update commodity
     set task_id = #{taskId,jdbcType=INTEGER},
+      platform = #{platform,jdbcType=VARCHAR},
       product_id = #{productId,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       price = #{price,jdbcType=INTEGER},

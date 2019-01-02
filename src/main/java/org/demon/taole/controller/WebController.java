@@ -38,11 +38,12 @@ public class WebController {
 
     @GetMapping("/web/goods/{page}")
     public String commodities(ModelMap map, @PathVariable("page") Integer page, Integer taskId, String name,
-                              Integer size, Integer orderBy) {
+                              Integer size, Integer orderBy, String platform) {
         CommodityQuery query = new CommodityQuery();
         query.taskId = Optional.ofNullable(taskId).orElse(0);
         query.setPage(Optional.ofNullable(page).orElse(1));
         query.name = Optional.ofNullable(name).orElse(null);
+        query.platform = platform;
         FunctionUtil.whenNonNullDo(query::setSize, size);
         query.orderBy = Constants.MAP.get(Optional.ofNullable(orderBy).orElse(4));
         PageData<Commodity> pageData = commodityService.select(query);
@@ -53,6 +54,7 @@ public class WebController {
         map.addAttribute("taskId", query.taskId);
         map.addAttribute("offset", page);
         map.addAttribute("orderBy", Optional.ofNullable(orderBy).orElse(4));
+        map.addAttribute("platform", platform);
         return "product/goods";
     }
 
@@ -66,7 +68,8 @@ public class WebController {
 
     @GetMapping("/web/goods/sendPrice/{commodityId}/{sendPrice}")
     @ResponseBody
-    public void updateGoods(@PathVariable("commodityId") Integer commodityId, @PathVariable("sendPrice") Integer sendPrice) {
+    public void updateGoods(@PathVariable("commodityId") Integer commodityId,
+                            @PathVariable("sendPrice") Integer sendPrice) {
         FunctionUtil.check(commodityId == null || commodityId < 1, new BusinessException(-2, "参数错误"));
         commodityService.update(commodityId, sendPrice);
     }

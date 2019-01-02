@@ -14,4 +14,5 @@ public class CommodityQuery extends PageReq {
     public String name;
     public String status;
     public String orderBy;
+    public String platform;
 }

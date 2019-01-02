@@ -114,8 +114,14 @@ public class MailService {
         }
     }
 
-    String getEmailContent(String name, Integer price, String url, Integer commodityId) {
-        return "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><title>邮件</title></head><body><h1>" + name + "</h1><h2>当前价格：<span style=\"color: red\">" + price + "</span></h2><h2><a target=\"_blank\" href=\"" + url + "\">商品地址</a></h2></body><h2><a target=\"_blank\" href=\"http://taole.luckygrra.com/web/stat/" + commodityId + "\">波动</a></h2></body></html>";
+    String getEmailContent(String name, Integer price, String url, Integer commodityId, String platform,
+                           Integer discount) {
+        return "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><title>邮件</title></head><body><h1><img" +
+                " src=\"http://res.luckygrra.com/resources/" + platform + ".ico\" width=\"50\" " +
+                "height=\"50\"></h1><h2>" + name + "</h2><h3>当前价格：<span style=\"color: red\">" + price + "</span></h3" +
+                "><h3>根据平台监控降价：<span style=\"color: red\">" + discount + "</span></h3><h3><a target=\"_blank\" " +
+                "href=\"" + url + "\">商品地址</a></h3></body><h3><a target=\"_blank\" href=\"http://taole.luckygrra" +
+                ".com/web/stat/" + commodityId + "\">波动</a></h3></body></html>";
     }
 
     /**

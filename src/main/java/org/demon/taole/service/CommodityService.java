@@ -8,6 +8,7 @@ import org.demon.taole.mapper.CommodityMapper;
 import org.demon.taole.pojo.Commodity;
 import org.demon.taole.pojo.CommodityExample;
 import org.demon.util.FunctionUtil;
+import org.demon.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +29,14 @@ public class CommodityService {
         CommodityExample example = new CommodityExample();
         CommodityExample.Criteria criteria = example.createCriteria();
         FunctionUtil.whenNonNullDo(criteria::andTaskIdEqualTo, query.taskId);
-        FunctionUtil.whenNonNullDo(a -> criteria.andNameLike(StrUtil.format("%{}%", a)), query.name);
+        if (StrUtil.isNotBlank(query.name)) {
+            criteria.andNameLike(StrUtil.format("%{}%", query.name));
+        }
         FunctionUtil.whenNonNullDo(example::setOrderByClause, query.orderBy);
-        criteria.andCreatetimeGreaterThanOrEqualTo(DateUtil.lastMonth());
+        if (StrUtil.isNotBlank(query.platform)) {
+            criteria.andPlatformEqualTo(query.platform);
+        }
+        criteria.andUpdatetimeGreaterThanOrEqualTo(DateUtil.lastMonth());
         criteria.andStatusEqualTo("1");
         PageData<Commodity> pageData = new PageData<>();
         pageData.count = commodityMapper.countByExample(example);

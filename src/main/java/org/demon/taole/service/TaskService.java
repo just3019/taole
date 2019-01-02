@@ -104,7 +104,8 @@ public class TaskService {
         int taskId = Optional.ofNullable(feedback.taskId).orElse(0);
         int lowPrice = NumberUtil.parseInt(feedback.lowPrice);
         int price = NumberUtil.parseInt(feedback.price);
-        int originalPrice = NumberUtil.parseInt(feedback.originalPrice) == 0 ? price : NumberUtil.parseInt(feedback.originalPrice);
+        int originalPrice = NumberUtil.parseInt(feedback.originalPrice) == 0 ? price :
+                NumberUtil.parseInt(feedback.originalPrice);
         commodity.setTaskId(taskId);
         commodity.setName(feedback.name);
         commodity.setLowPrice(lowPrice);
@@ -142,7 +143,8 @@ public class TaskService {
                         commodity.setSendPrice(lowPrice);
                         commodity.setLowtime(new Date());
                         String subject = StrUtil.format("监控反馈");
-                        String content = mailService.getEmailContent(feedback.name, lowPrice, feedback.url, commodityId);
+                        String content = mailService.getEmailContent(feedback.name, lowPrice, feedback.url,
+                                commodityId, list.get(0).getPlatform(), (list.get(0).getOriginalPrice() - price));
                         ExecutorPool.getInstance().execute(() -> mailService.send(subject, content, taskId, true));
                     }
                 }

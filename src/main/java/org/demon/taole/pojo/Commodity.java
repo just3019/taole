@@ -7,6 +7,8 @@ public class Commodity {
 
     private Integer taskId;
 
+    private String platform;
+
     private String productId;
 
     private String name;
@@ -47,6 +49,14 @@ public class Commodity {
 
     public void setTaskId(Integer taskId) {
         this.taskId = taskId;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform == null ? null : platform.trim();
     }
 
     public String getProductId() {
