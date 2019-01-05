@@ -19,5 +19,6 @@ public class Constants {
         MAP.put(2, " percent asc ");
         MAP.put(3, " lowtime desc");
         MAP.put(4, " updatetime desc ");
+        MAP.put(5, " low_price asc ");
     }
 }
