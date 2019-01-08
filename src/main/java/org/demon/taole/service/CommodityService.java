@@ -8,8 +8,8 @@ import org.demon.taole.mapper.CommodityMapper;
 import org.demon.taole.pojo.Commodity;
 import org.demon.taole.pojo.CommodityExample;
 import org.demon.util.FunctionUtil;
-import org.demon.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -62,5 +62,29 @@ public class CommodityService {
         commodity.setId(commodityId);
         commodity.setStatus("0");
         commodityMapper.updateByPrimaryKeySelective(commodity);
+    }
+
+    /**
+     * 更新商品平台
+     */
+    @Scheduled(cron = "30 1/5 * * * ?")
+    public void updateCommodityPlatform() {
+        Commodity commodity = new Commodity();
+        commodity.setPlatform("1");
+        CommodityExample example = new CommodityExample();
+        example.createCriteria().andUrlLike("%product.suning.com%").andPlatformNotEqualTo("1");
+        commodityMapper.updateByExampleSelective(commodity, example);
+        commodity.setPlatform("2");
+        example.clear();
+        example.createCriteria().andUrlLike("%item.gome.com.cn%").andPlatformNotEqualTo("2");
+        commodityMapper.updateByExampleSelective(commodity, example);
+        commodity.setPlatform("3");
+        example.clear();
+        example.createCriteria().andUrlLike("%goods.kaola.com%").andPlatformNotEqualTo("3");
+        commodityMapper.updateByExampleSelective(commodity, example);
+        example.clear();
+        commodity.setPlatform("4");
+        example.createCriteria().andUrlLike("%www.amazon.cn%").andPlatformNotEqualTo("4");
+        commodityMapper.updateByExampleSelective(commodity, example);
     }
 }

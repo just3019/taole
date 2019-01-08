@@ -21,4 +21,12 @@ public class Constants {
         MAP.put(4, " updatetime desc ");
         MAP.put(5, " low_price asc ");
     }
+
+    public static String convertAsd(String url) {
+        String asdUrl = url.replaceFirst("gome", "gomeasd").replaceFirst("amazon", "amazonasd")
+                .replaceFirst("jd", "jdasd").replaceFirst("suning", "suningasd")
+                .replaceFirst("kaola", "kaolaasd");
+        return asdUrl;
+
+    }
 }

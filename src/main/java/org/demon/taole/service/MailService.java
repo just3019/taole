@@ -3,6 +3,7 @@ package org.demon.taole.service;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.apachecommons.CommonsLog;
+import org.demon.taole.bean.Constants;
 import org.demon.taole.mapper.AccountMapper;
 import org.demon.taole.mapper.EmailMapper;
 import org.demon.taole.mapper.TaskMapper;
@@ -116,18 +117,21 @@ public class MailService {
 
     String getEmailContent(String name, Integer price, String url, Integer commodityId, String platform,
                            Integer discount) {
+        String asdUrl = Constants.convertAsd(url);
         return "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><title>邮件</title></head><body><h1><img" +
                 " src=\"http://res.luckygrra.com/resources/" + platform + ".ico\" width=\"50\" " +
                 "height=\"50\"></h1><h2>" + name + "</h2><h3>当前价格：<span style=\"color: red\">" + price + "</span></h3" +
                 "><h3>根据平台监控降价：<span style=\"color: red\">" + discount + "</span></h3><h3><a target=\"_blank\" " +
-                "href=\"" + url + "\">商品地址</a></h3></body><h3><a target=\"_blank\" href=\"http://taole.luckygrra" +
-                ".com/web/stat/" + commodityId + "\">波动</a></h3></body></html>";
+                "href=\"" + url + "\">商品地址</a></h3>" +
+                "<h3><a target=\"_blank\" href=\"" + asdUrl + "\">asd</a></h3>" +
+                "<h3><a target=\"_blank\" href=\"http://taole.luckygrra.com/web/stat/" + commodityId + "\">波动</a></h3" +
+                "></body></html>";
     }
 
     /**
      * 每天1点删除当前时间一个月前的邮件
      */
-    @Scheduled(cron = "0 0 1 * * ?")
+    //@Scheduled(cron = "0 0 1 * * ?")
     public void delete() {
         log.info("定时删除邮件");
         EmailExample example = new EmailExample();

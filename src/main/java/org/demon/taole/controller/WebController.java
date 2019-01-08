@@ -47,7 +47,8 @@ public class WebController {
         FunctionUtil.whenNonNullDo(query::setSize, size);
         query.orderBy = Constants.MAP.get(Optional.ofNullable(orderBy).orElse(4));
         PageData<Commodity> pageData = commodityService.select(query);
-        pageData.list = pageData.list.stream().peek(this::convertAsd).collect(Collectors.toList());
+        pageData.list = pageData.list.stream()
+                .peek(a -> a.setAsdUrl(Constants.convertAsd(a.getUrl()))).collect(Collectors.toList());
         map.addAttribute("goods", pageData);
         map.addAttribute("size", Optional.ofNullable(size).orElse(query.getSize()));
         map.addAttribute("name", Optional.ofNullable(name).orElse(""));
@@ -58,14 +59,6 @@ public class WebController {
         return "product/goods";
     }
 
-    private void convertAsd(Commodity commodity) {
-        commodity.setAsdUrl(commodity.getUrl()
-                .replaceFirst("gome", "gomeasd")
-                .replaceFirst("amazon", "amazonasd")
-                .replaceFirst("jd", "jdasd")
-                .replaceFirst("suning", "suningasd")
-                .replaceFirst("kaola", "kaolaasd"));
-    }
 
     @GetMapping("/web/goods/sendPrice/{commodityId}/{sendPrice}")
     @ResponseBody
