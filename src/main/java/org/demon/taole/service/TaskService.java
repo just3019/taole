@@ -112,7 +112,7 @@ public class TaskService {
         commodity.setPrice(price);
         commodity.setProductId(feedback.productId);
         commodity.setUrl(feedback.url);
-        commodity.setSendPrice(lowPrice);
+        commodity.setSendPrice((int) NumberUtil.mul(lowPrice, 0.9));
         commodity.setOriginalPrice(originalPrice);
         commodity.setPercent((float) NumberUtil.div((float) price, (float) originalPrice, 2));
         CommodityExample example = new CommodityExample();
@@ -139,9 +139,9 @@ public class TaskService {
                 commodity.setPercent((float) NumberUtil.div((float) price, (float) list.get(0).getOriginalPrice(), 2));
                 if (list.get(0).getLowPrice() > lowPrice) {
                     commodity.setLowPrice(lowPrice);
-                    if (list.get(0).getSendPrice() > lowPrice) {
+                    commodity.setLowtime(new Date());
+                    if (list.get(0).getSendPrice() >= lowPrice) {
                         commodity.setSendPrice(lowPrice);
-                        commodity.setLowtime(new Date());
                         String subject = StrUtil.format("监控反馈");
                         String content = mailService.getEmailContent(feedback.name, lowPrice, feedback.url,
                                 commodityId, list.get(0).getPlatform(), (list.get(0).getOriginalPrice() - price));
