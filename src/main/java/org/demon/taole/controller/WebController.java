@@ -60,6 +60,7 @@ public class WebController {
 
     private void convertAsd(Commodity commodity) {
         commodity.setAsdUrl(commodity.getUrl()
+                .replaceFirst("gome", "gomeasd")
                 .replaceFirst("amazon", "amazonasd")
                 .replaceFirst("jd", "jdasd")
                 .replaceFirst("suning", "suningasd")
