@@ -14,6 +14,9 @@ public class JavaTest {
     @Test
     public void test() {
         System.out.println(NumberUtil.mul(1000, 0.9));
+        int i = 1;
+        i -= i << 2;
+        System.out.println(i);
         //        System.out.println(DateUtil.offsetHour(new Date(), -4));
         //        System.out.println(DateUtil.offsetHour(new Date(), 0));
         //        System.out.println(DateUtil.beginOfDay(DateUtil.yesterday()));
