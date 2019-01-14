@@ -3,6 +3,7 @@ package org.demon.taole.service;
 import cn.hutool.core.date.DateUtil;
 import org.demon.taole.mapper.CommodityMapper;
 import org.demon.taole.mapper.CommodityPriceMapper;
+import org.demon.taole.pojo.Commodity;
 import org.demon.taole.pojo.CommodityExample;
 import org.demon.taole.pojo.CommodityPrice;
 import org.demon.taole.pojo.CommodityPriceExample;
@@ -33,13 +34,15 @@ public class CommodityPriceService {
     }
 
     /**
-     * 删除前一天价格记录，
+     * 删除前一段时间的价格记录，
      * 剩下当天的不同价格
      */
     @Scheduled(cron = "0 0 0/4 * * ?")
     public void deleteTask() {
         Date begin = DateUtil.offsetHour(new Date(), -4);
         Date end = DateUtil.offsetHour(new Date(), 0);
+        CommodityExample commodityExample = new CommodityExample();
+        commodityExample.createCriteria().andUpdatetimeLessThan(DateUtil.lastWeek());
         Optional.ofNullable(commodityMapper.selectByExample(new CommodityExample())).orElseGet(ArrayList::new)
                 .forEach(a -> {
                     List<Map<String, Object>> list = commodityPriceMapper.select(a.getId(), begin, end);
