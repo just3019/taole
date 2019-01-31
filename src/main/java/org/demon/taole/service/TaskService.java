@@ -19,16 +19,13 @@ import org.demon.taole.pojo.CommodityPrice;
 import org.demon.taole.pojo.Task;
 import org.demon.taole.pojo.TaskExample;
 import org.demon.util.FunctionUtil;
-import org.demon.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * desc:
@@ -89,13 +86,11 @@ public class TaskService {
     }
 
 
-    @Transactional
     public void feedback(TaskFeedback taskFeedback) {
         Optional.ofNullable(taskFeedback).orElseThrow(() -> new BusinessException(-2, "参数错误"))
                 .feedbacks.forEach(a -> ExecutorPool.getInstance().execute(() -> feedback(a)));
     }
 
-    @Transactional
     public void feedback(Feedback feedback) {
         if (NumberUtil.parseInt(feedback.lowPrice) <= 0) {
             return;
@@ -151,11 +146,10 @@ public class TaskService {
                 commodityMapper.updateByPrimaryKeySelective(commodity);
             }
         }
-        List<CommodityPrice> commodityPrices = feedback.feedbackPrices.stream().map(a -> convert(a,
-                commodityId)).collect(Collectors.toList());
-        if (StringUtil.isNotEmpty(commodityPrices)) {
-            commodityPriceMapper.insertByBatch(commodityPrices);
-        }
+        CommodityPrice commodityPrice = new CommodityPrice();
+        commodityPrice.setCommodityId(commodityId);
+        commodityPrice.setPrice(lowPrice);
+        commodityPriceMapper.insertSelective(commodityPrice);
     }
 
     private CommodityPrice convert(FeedbackPrice p, Integer commodityId) {
