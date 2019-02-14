@@ -1,6 +1,7 @@
 package org.demon.taole.service;
 
 import cn.hutool.core.date.DateUtil;
+import lombok.extern.apachecommons.CommonsLog;
 import org.demon.taole.mapper.CommodityMapper;
 import org.demon.taole.mapper.CommodityPriceMapper;
 import org.demon.taole.pojo.Commodity;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@CommonsLog
 public class CommodityPriceService {
 
     @Autowired
@@ -41,10 +43,8 @@ public class CommodityPriceService {
     public void deleteTask() {
         Date begin = DateUtil.offsetHour(new Date(), -4);
         Date end = DateUtil.offsetHour(new Date(), 0);
-        CommodityExample commodityExample = new CommodityExample();
-        commodityExample.createCriteria().andUpdatetimeLessThan(DateUtil.lastWeek());
         Optional.ofNullable(commodityMapper.selectByExample(new CommodityExample())).orElseGet(ArrayList::new)
-                .forEach(a -> clearCommodityPrice(a.getId(), begin, end));
+                .parallelStream().forEach(a -> clearCommodityPrice(a.getId(), begin, end));
     }
 
     /**
@@ -88,10 +88,14 @@ public class CommodityPriceService {
     public void deleteMonthTask() {
         Date begin = DateUtil.lastMonth();
         Date end = new Date();
-        CommodityExample commodityExample = new CommodityExample();
-        commodityExample.createCriteria().andUpdatetimeGreaterThan(begin);
         Optional.ofNullable(commodityMapper.selectByExample(new CommodityExample())).orElseGet(ArrayList::new)
-                .forEach(i -> clearCommodityPrice(i.getId(), begin, end));
+                .parallelStream().forEach(i -> clearCommodityPrice(i.getId(), begin, end));
+    }
+
+
+    public void deleteTask(Date begin, Date end) {
+        Optional.ofNullable(commodityMapper.selectByExample(new CommodityExample())).orElseGet(ArrayList::new)
+                .parallelStream().forEach(i -> clearCommodityPrice(i.getId(), begin, end));
     }
 
 }
