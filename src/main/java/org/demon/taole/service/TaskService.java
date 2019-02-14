@@ -107,7 +107,7 @@ public class TaskService {
         commodity.setPrice(price);
         commodity.setProductId(feedback.productId);
         commodity.setUrl(feedback.url);
-        commodity.setSendPrice((int) NumberUtil.mul(lowPrice, 0.9));
+        commodity.setSendPrice((int) NumberUtil.mul(lowPrice, 0.8));
         commodity.setOriginalPrice(originalPrice);
         commodity.setPercent((float) NumberUtil.div((float) price, (float) originalPrice, 2));
         CommodityExample example = new CommodityExample();
