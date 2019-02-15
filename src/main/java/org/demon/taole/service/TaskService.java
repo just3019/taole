@@ -95,6 +95,9 @@ public class TaskService {
         if (NumberUtil.parseInt(feedback.lowPrice) <= 0) {
             return;
         }
+        if (feedback.name.contains("二手")) {
+            return;
+        }
         Commodity commodity = new Commodity();
         int taskId = Optional.ofNullable(feedback.taskId).orElse(0);
         int lowPrice = NumberUtil.parseInt(feedback.lowPrice);
