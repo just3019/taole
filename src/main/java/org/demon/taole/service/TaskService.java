@@ -135,15 +135,18 @@ public class TaskService {
                 commodity.setSendPrice(null);
                 commodity.setOriginalPrice(null);
                 commodity.setPercent((float) NumberUtil.div((float) price, (float) list.get(0).getOriginalPrice(), 2));
-                if (list.get(0).getLowPrice() > lowPrice) {
-                    commodity.setLowPrice(lowPrice);
-                    commodity.setLowtime(new Date());
-                    if (list.get(0).getSendPrice() >= lowPrice) {
-                        commodity.setSendPrice(lowPrice);
-                        String subject = StrUtil.format("监控反馈");
-                        String content = mailService.getEmailContent(feedback.name, lowPrice, feedback.url,
-                                commodityId, list.get(0).getPlatform(), (list.get(0).getOriginalPrice() - price));
-                        ExecutorPool.getInstance().execute(() -> mailService.send(subject, content, taskId, true));
+                int differ = list.get(0).getOriginalPrice() - price;
+                if (differ % 10 != 0) {
+                    if (list.get(0).getLowPrice() > lowPrice) {
+                        commodity.setLowPrice(lowPrice);
+                        commodity.setLowtime(new Date());
+                        if (list.get(0).getSendPrice() >= lowPrice) {
+                            commodity.setSendPrice(lowPrice);
+                            String subject = StrUtil.format("监控反馈");
+                            String content = mailService.getEmailContent(feedback.name, lowPrice, feedback.url,
+                                    commodityId, list.get(0).getPlatform(), differ);
+                            ExecutorPool.getInstance().execute(() -> mailService.send(subject, content, taskId, true));
+                        }
                     }
                 }
                 commodityMapper.updateByPrimaryKeySelective(commodity);
